@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import styles from './Canvas.module.css';
+
 const height = 256;
 const width = 256;
 
@@ -15,9 +17,10 @@ export default function Canvas() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
       <canvas
         ref={canvasRef}
+        className={styles.canvas}
         width={width}
         height={height}
       />
