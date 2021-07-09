@@ -1,28 +1,24 @@
-import { useEffect, useRef } from 'react';
-
 import styles from './Canvas.module.css';
 
 const height = 256;
 const width = 256;
 
-let canvas;
-let ctx;
-
-export default function Canvas() {
-  const canvasRef = useRef();
-
-  useEffect(() => {
-    canvas = canvasRef.current;
-    ctx = canvas.getContext('2d');
-  }, []);
+export default function Canvas(props) {
 
   return (
     <div className={styles.container}>
-      <canvas
-        ref={canvasRef}
-        className={styles.canvas}
+      <iframe
+        title="canvas"
+        sandbox="allow-scripts"
+        srcDoc={`
+          <html>
+            <body></body>
+            <script>${props.code}</script>
+          </html>
+        `}
         width={width}
         height={height}
+        frameBorder="0"
       />
     </div>
   );

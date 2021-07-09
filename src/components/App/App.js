@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+
 import Editor from '../Editor/Editor.js';
 import Canvas from '../Canvas/Canvas.js';
 
@@ -15,12 +17,14 @@ if (!firebase.apps.length) {
 }
 
 export default function App() {
+  const [code, setCode] = useState('');
+
   useAuthState(firebase.auth());
 
   return (
     <div className={styles.container}>
-      <Editor />
-      <Canvas />
+      <Editor setCode={setCode} />
+      <Canvas code={code} />
     </div>
   );
 }
