@@ -1,5 +1,6 @@
 import './App.css';
 import Editor from '../Editor/Editor.js';
+import Canvas from '../Canvas/Canvas.js';
 
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -20,6 +21,7 @@ export default function App() {
   return (
     <div className="App">
       <Editor />
+      <Canvas />
     </div>
   );
 }
