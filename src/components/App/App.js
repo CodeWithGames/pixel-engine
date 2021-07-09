@@ -1,4 +1,3 @@
-import './App.css';
 import Editor from '../Editor/Editor.js';
 import Canvas from '../Canvas/Canvas.js';
 
@@ -19,7 +18,7 @@ export default function App() {
   useAuthState(firebase.auth());
 
   return (
-    <div className="App">
+    <div className={styles.container}>
       <Editor />
       <Canvas />
     </div>
