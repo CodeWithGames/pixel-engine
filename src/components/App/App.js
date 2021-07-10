@@ -23,8 +23,10 @@ export default function App() {
 
   return (
     <div className={styles.container}>
-      <Editor setCode={setCode} />
-      <Canvas code={code} />
+      <SplitPane split="vertical" defaultSize="50%">
+        <Editor setCode={setCode} />
+        <Canvas code={code} />
+      </SplitPane>
     </div>
   );
 }
