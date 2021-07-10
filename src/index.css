@@ -17,8 +17,14 @@ button {
 
 .react-codemirror2 {
   flex-grow: 1;
+  overflow: scroll;
 }
 
 .CodeMirror {
   height: 100%!important;
+}
+
+.CodeMirror * {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
