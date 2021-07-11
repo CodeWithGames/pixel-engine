@@ -31,7 +31,20 @@ export default function Canvas(props) {
               const rect = (x, y, w, h) => ctx.fillRect(x, y, w, h);
               const fill = () => ctx.fillRect(0, 0, ${width}, ${height});
               const clear = () => ctx.clearRect(0, 0, ${width}, ${height});
+              // set up game loop
+              let lastTime = 0;
+              const gameLoop = time => {
+                const delta = time - lastTime;
+                lastTime = time;
+                if (typeof update === 'function') update(delta);
+                clear();
+                if (typeof draw === 'function') draw();
+                requestAnimationFrame(gameLoop);
+              }
               ${props.code}
+              // start game loop
+              if (typeof start === 'function') start();
+              gameLoop();
             </script>
           </html>
         `}
