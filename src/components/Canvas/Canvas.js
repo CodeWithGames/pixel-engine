@@ -12,8 +12,27 @@ export default function Canvas(props) {
         sandbox="allow-scripts"
         srcDoc={`
           <html>
-            <body></body>
-            <script>${props.code}</script>
+            <body>
+              <canvas
+                id="canvas"
+                height=${height}
+                width=${width}
+              />
+            </body>
+            <script>
+              // set up style
+              document.body.style.background = '#fff';
+              document.body.style.margin = 0;
+              document.body.style.overflow = 'hidden';
+              // set up canvas
+              const canvas = document.getElementById('canvas');
+              const ctx = canvas.getContext('2d');
+              const color = c => ctx.fillStyle = c;
+              const rect = (x, y, w, h) => ctx.fillRect(x, y, w, h);
+              const fill = () => ctx.fillRect(0, 0, ${width}, ${height});
+              const clear = () => ctx.clearRect(0, 0, ${width}, ${height});
+              ${props.code}
+            </script>
           </html>
         `}
         width={width}
