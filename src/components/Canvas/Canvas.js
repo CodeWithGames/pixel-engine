@@ -37,9 +37,21 @@ export default function Canvas(props) {
                 const delta = time - lastTime;
                 lastTime = time;
                 if (typeof update === 'function') update(delta);
-                clear();
                 if (typeof draw === 'function') draw();
+                lastPressedKeys = { ...pressedKeys };
                 requestAnimationFrame(gameLoop);
+              }
+              // set up key listeners
+              let lastPressedKeys = {};
+              const pressedKeys = {};
+              window.onkeydown = e => pressedKeys[e.keyCode] = true;
+              window.onkeyup = e => pressedKeys[e.keyCode] = false;
+              const isKeyDown = key => {
+                return pressedKeys[key.charCodeAt(0)];
+              }
+              const isKey = key => {
+                return pressedKeys[key.charCodeAt(0)] &&
+                !lastPressedKeys[key.charCodeAt(0)];
               }
               ${props.code}
               // start game loop
