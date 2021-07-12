@@ -12,6 +12,8 @@ A minimalist online game engine.
 
 `clear()`: clears canvas
 
+Reserved variables: `canvas`, `ctx`
+
 ## Game Loop
 
 `start()`: called once at the start of the game before `update` and `draw`
@@ -19,6 +21,16 @@ A minimalist online game engine.
 `update(delta)`: called 60 times a second where `delta` is time in milliseconds since last call
 
 `draw()`: called 60 times a second right after `update`
+
+Reserved variables: `time`, `lastTime`, `delta`
+
+## Keyboard Input
+
+`isKeyDown(key)`: returns whether given character `key` is pressed
+
+`isKey(key)`: returns whether given character `key` was pressed in the last frame
+
+Reserved variables: `pressedKeys`, `lastPressedKeys`
 
 ## Example
 
