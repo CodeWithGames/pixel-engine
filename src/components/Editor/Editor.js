@@ -3,10 +3,10 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/javascript/javascript.js';
 import { Controlled } from 'react-codemirror2';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 
 import styles from './Editor.module.css';
-
-const maxLength = 2048;
 
 export default function Editor(props) {
   const [code, setCode] = useState('');
@@ -14,16 +14,16 @@ export default function Editor(props) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <button onClick={() => props.setCode(code)}>Run</button>
-        <p>{code.length}/{maxLength}</p>
+        <button onClick={() => props.setCode(code)}>
+          <PlayArrowIcon />
+        </button>
+        <button onClick={() => props.setCode('')}>
+          <PauseIcon />
+        </button>
       </div>
       <Controlled
         value={code}
         onBeforeChange={(e, d, v) => setCode(v)}
-        onChange={(e, d, v) => {
-          // if max length exceeded, slice code
-          if (v.length > maxLength) setCode(v.slice(0, maxLength));
-        }}
         options={{
           lineWrapping: true,
           mode: 'javascript',

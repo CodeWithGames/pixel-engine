@@ -14,3 +14,7 @@
   justify-content: space-around;
   color: #fff;
 }
+
+.header > button {
+  padding: 3px 3px 0 3px;
+}
