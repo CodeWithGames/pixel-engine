@@ -6,8 +6,25 @@ import 'ace-builds/src-noconflict/mode-javascript.js';
 import 'ace-builds/src-noconflict/theme-monokai.js';
 import styles from '../styles/Code.module.css';
 
+const defaultCode =
+`// runs once on start
+function start() {
+
+}
+
+// runs once a frame
+function update(delta) {
+
+}
+
+// runs once a frame after update
+function draw() {
+
+}
+`;
+
 export default function Code(props) {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(defaultCode);
 
   return (
     <div>

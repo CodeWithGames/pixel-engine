@@ -23,12 +23,28 @@ export default function Game(props) {
     }
   </style>
   <script>
-    let canvas, ctx;
+    let _canvas, _ctx;
+    // game loop
+    let _lastTime = 0;
+    const _gameLoop = time => {
+      // calculate time delta
+      const delta = time - _lastTime;
+      _lastTime = time;
+      // call update and draw
+      if (typeof update === 'function') update(delta);
+      if (typeof draw === 'function') draw();
+      // continue loop
+      requestAnimationFrame(_gameLoop);
+    }
     // runs after body has loaded
     function _start() {
       // get canvas and context
-      canvas = document.getElementById('canvas-game');
-      ctx = canvas.getContext('2d');
+      _canvas = document.getElementById('canvas-game');
+      _ctx = _canvas.getContext('2d');
+      // run start function
+      if (typeof start === 'function') start();
+      // start game loop
+      requestAnimationFrame(_gameLoop);
     }
     ${props.code}
   </script>
