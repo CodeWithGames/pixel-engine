@@ -1,4 +1,5 @@
 import Game from '../components/Game.js';
+import Maps from '../components/Maps.js';
 
 import dynamic from 'next/dynamic';
 
@@ -10,6 +11,7 @@ export default function Index() {
   return (
     <div>
       <Code />
+      <Maps />
       <Game />
     </div>
   );
