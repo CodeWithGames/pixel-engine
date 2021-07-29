@@ -3,7 +3,7 @@ import styles from '../styles/Game.module.css';
 const width = 256;
 const height = 256;
 
-export default function Game() {
+export default function Game(props) {
   const srcDoc =
 `<html>
   <body onload="_start()">
@@ -30,6 +30,7 @@ export default function Game() {
       canvas = document.getElementById('canvas-game');
       ctx = canvas.getContext('2d');
     }
+    ${props.code}
   </script>
 </html>
 `;
