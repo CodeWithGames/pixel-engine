@@ -6,9 +6,31 @@ const height = 256;
 export default function Game() {
   const srcDoc =
 `<html>
-  <body></body>
-  <style></style>
-  <script></script>
+  <body onload="_start()">
+    <canvas
+      id="canvas-game"
+      width=${width}
+      height=${height}
+    />
+  </body>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+    #canvas-game {
+      background: #fff;
+    }
+  </style>
+  <script>
+    let canvas, ctx;
+    // runs after body has loaded
+    function _start() {
+      // get canvas and context
+      canvas = document.getElementById('canvas-game');
+      ctx = canvas.getContext('2d');
+    }
+  </script>
 </html>
 `;
 
