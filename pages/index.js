@@ -1,3 +1,5 @@
+import Game from '../components/Game.js';
+
 import dynamic from 'next/dynamic';
 
 import styles from '../styles/Index.module.css';
@@ -8,6 +10,7 @@ export default function Index() {
   return (
     <div>
       <Code />
+      <Game />
     </div>
   );
 }
