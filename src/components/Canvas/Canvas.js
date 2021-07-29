@@ -8,21 +8,23 @@ const width = 256;
 export default function Canvas(props) {
   const srcDoc =
 `<html>
-  <body>
+  <body onload="startGame()">
     <canvas
       id="canvas"
       height=${height}
       width=${width}
     />
   </body>
+  <style>
+    body {
+      background: #fff;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
   <script>
-    // set up style
-    document.body.style.background = '#fff';
-    document.body.style.margin = 0;
-    document.body.style.overflow = 'hidden';
-    // set up canvas
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
+    // canvas functions
+    let canvas, ctx;
     const color = c => ctx.fillStyle = c;
     const rect = (x, y, w, h) => ctx.fillRect(x, y, w, h);
     const fill = () => ctx.fillRect(0, 0, ${width}, ${height});
@@ -49,10 +51,16 @@ export default function Canvas(props) {
       return pressedKeys[key.charCodeAt(0)] &&
       !lastPressedKeys[key.charCodeAt(0)];
     }
+    // runs after body has loaded
+    function startGame() {
+      // set up canvas
+      canvas = document.getElementById('canvas');
+      ctx = canvas.getContext('2d');
+      // start game loop
+      if (typeof start === 'function') start();
+      gameLoop();
+    }
     ${props.code}
-    // start game loop
-    if (typeof start === 'function') start();
-    gameLoop();
   </script>
 </html>
 `;
