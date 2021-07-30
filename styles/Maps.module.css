@@ -28,4 +28,5 @@
 .canvas {
   background: #fff;
   margin: 20px;
+  outline: 1px solid #ddd;
 }

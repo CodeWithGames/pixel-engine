@@ -4,6 +4,8 @@ import styles from '../styles/Maps.module.css';
 
 import { useEffect, useState } from 'react';
 
+const gridColor = '#dddddd';
+
 const defaultColors = [
   '#ffffff', '#eeeeee', '#dddddd', '#cccccc',
   '#bbbbbb', '#aaaaaa', '#999999', '#888888',
@@ -36,6 +38,9 @@ export default function Maps() {
 
   // draws current tile
   function drawTile() {
+    // clear canvas
+    tileCtx.fillStyle = gridColor;
+    tileCtx.fillRect(0, 0, tileSize, tileSize);
     // get current tile
     const tile = tiles[currTile];
     // for each pixel
@@ -45,7 +50,7 @@ export default function Maps() {
         const colorIndex = y * tileGridSize + x;
         const color = colors[tile[colorIndex]];
         tileCtx.fillStyle = color;
-        tileCtx.fillRect(x * tileGrid, y * tileGrid, tileGrid, tileGrid);
+        tileCtx.fillRect(x * tileGrid + 1, y * tileGrid + 1, tileGrid - 2, tileGrid - 2);
       }
     }
   }
