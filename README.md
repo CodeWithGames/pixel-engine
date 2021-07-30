@@ -4,25 +4,19 @@ A minimalist online game engine.
 
 ## Drawing
 
-`color(c)`: sets canvas draw color to `c`
-
-`rect(x, y, w, h)`: draws canvas rect of `w` width and `h` height at `x`, `y`
-
-`fill()`: draws a full canvas rect
-
 `clear()`: clears canvas
 
-Reserved variables: `canvas`, `ctx`
+`fill(color)`: draws rect of `color` color over full canvas
+
+`rect(x, y, w, h, color)`: draws rect of `w` width, `h` height, and `color` color at `x`, `y`
 
 ## Game Loop
 
-`start()`: called once at the start of the game before `update` and `draw`
+`start()`: runs once at the start of the game before `update` and `draw`
 
-`update(delta)`: called 60 times a second where `delta` is time in milliseconds since last call
+`update(delta)`: runs once a frame where `delta` is time in milliseconds since last call
 
-`draw()`: called 60 times a second right after `update`
-
-Reserved variables: `time`, `lastTime`, `delta`
+`draw()`: runs once a frame after `update`
 
 ## Keyboard Input
 
@@ -30,24 +24,19 @@ Reserved variables: `time`, `lastTime`, `delta`
 
 `isKey(key)`: returns whether given character `key` was pressed in the last frame
 
-Reserved variables: `pressedKeys`, `lastPressedKeys`
-
 ## Example
 
 ```js
-const player = {
-  x: 0,
-  y: 0,
-  w: 16,
-  h: 16
-};
-
+// define player
+const player = { x: 0, y: 0, w: 16, h: 16 };
 const speed = 0.1;
 
+// runs once on start
 function start() {
-  color('blue');
+  fill('green');
 }
 
+// runs once a frame
 function update(delta) {
   if (isKeyDown("W")) player.y -= speed * delta;
   if (isKeyDown("A")) player.x -= speed * delta;
@@ -55,8 +44,9 @@ function update(delta) {
   if (isKeyDown("D")) player.x += speed * delta;
 }
 
+// runs once a frame after update
 function draw() {
-  clear();
-  rect(player.x, player.y, player.w, player.h);
+  fill('green');
+  rect(player.x, player.y, player.w, player.h, 'blue');
 }
 ```
