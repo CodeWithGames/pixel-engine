@@ -16,6 +16,10 @@ const defaultMaps = Array(16).fill(Array(16).fill(0));
 let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
 
+const tileGrid = 32;
+const tileGridSize = 4;
+const tileSize = tileGrid * tileGridSize;
+
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
   const [currColor, setCurrColor] = useState(0);
@@ -86,7 +90,7 @@ export default function Maps() {
                 styles.tile
               }
               key={`${i}`}
-              style={{ background: colors[tiles[0][0]] }}
+              style={{ background: colors[tiles[i][0]] }}
             >
             </div>
           )
@@ -95,9 +99,23 @@ export default function Maps() {
       <canvas
         id="canvas-tile"
         className={styles.canvas}
-        width={128}
-        height={128}
-        onMouseDown={e => drawColor(e)}
+        width={tileSize}
+        height={tileSize}
+        onMouseDown={e => {
+          // get x and y on canvas
+          const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
+          const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
+          // get x and y in tile units
+          const tileX = Math.floor(currX / tileGrid);
+          const tileY = Math.floor(currY / tileGrid);
+          // set tile at index
+          const tileIndex = tileY * tileGridSize + tileX;
+          const newTiles = tiles.slice();
+          const newTile = newTiles[currTile].slice();
+          newTile.splice(tileIndex, 1, currColor);
+          newTiles.splice(currTile, 1, newTile);
+          setTiles(newTiles);
+        }}
       />
       <h1>Maps</h1>
       <div className={styles.tilegrid}>
