@@ -28,17 +28,22 @@ export default function Maps() {
   const [maps, setMaps] = useState(defaultMaps);
   const [currMap, setCurrMap] = useState(0);
 
-  // draws current color onto tile
-  function drawColor(e) {
-    // get x and y on canvas
-    const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
-    const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
-    // get x and y in tile units
-    const tileX = Math.floor(currX / 16) * 16;
-    const tileY = Math.floor(currY / 16) * 16;
-    // draw color
-    tileCtx.fillStyle = colors[currColor];
-    tileCtx.fillRect(tileX, tileY, 16, 16);
+  // draws current tile
+  function drawTile() {
+    // get current tile
+    const tile = tiles[currTile];
+    // for each pixel
+    for (let y = 0; y < tileGridSize; y++) {
+      for (let x = 0; x < tileGridSize; x++) {
+        // draw color
+        const colorIndex = y * tileGridSize + x;
+        const color = colors[tile[colorIndex]];
+        tileCtx.fillStyle = color;
+        tileCtx.fillRect(x * tileGrid, y * tileGrid, tileGrid, tileGrid);
+      }
+    }
+  }
+
   }
 
   // get canvas contexts on start
@@ -48,6 +53,11 @@ export default function Maps() {
     mapCanvas = document.getElementById('canvas-map');
     mapCtx = mapCanvas.getContext('2d');
   }, []);
+
+  // draw tile when colors or tiles change
+  useEffect(() => {
+    drawTile();
+  }, [colors, tiles, currTile]);
 
   return (
     <div className={styles.container}>
