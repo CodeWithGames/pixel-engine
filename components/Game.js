@@ -72,6 +72,26 @@ export default function Game(props) {
       const keyCode = key.toUpperCase().charCodeAt(0);
       return _pressedKeys[keyCode] && !_lastPressedKeys[keyCode];
     }
+    // map functions
+    const _colors = ${JSON.stringify(props.colors)};
+    const _tiles = ${JSON.stringify(props.tiles)};
+    const _maps = ${JSON.stringify(props.maps)};
+    const loadTile = (x, y, index) => {
+      const tile = _tiles[index];
+      // for each pixel
+      for (let yp = 0; yp < ${tileSize}; yp++) {
+        for (let xp = 0; xp < ${tileSize}; xp++) {
+          // set fill color
+          const colorIndex = yp * ${tileSize} + xp;
+          const color = _colors[tile[colorIndex]];
+          _ctx.fillStyle = color;
+          // fill pixel
+          const xm = x + xp * ${tileGridPixels};
+          const ym = y + yp * ${tileGridPixels};
+          _ctx.fillRect(xm, ym, ${tileGridPixels}, ${tileGridPixels});
+        }
+      }
+    }
     // runs after body has loaded
     const _start = () => {
       // get canvas and context
