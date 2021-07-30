@@ -23,7 +23,17 @@ export default function Game(props) {
     }
   </style>
   <script>
+    // canvas functions
     let _canvas, _ctx;
+    const clear = () => _ctx.clearRect(0, 0, ${width}, ${height});
+    const fill = color => {
+      _ctx.fillStyle = color;
+      _ctx.fillRect(0, 0, ${width}, ${height});
+    }
+    const rect = (x, y, w, h, color) => {
+      _ctx.fillStyle = color;
+      _ctx.fillRect(x, y, w, h);
+    }
     // game loop
     let _lastTime = 0;
     const _gameLoop = time => {
@@ -36,8 +46,31 @@ export default function Game(props) {
       // continue loop
       requestAnimationFrame(_gameLoop);
     }
+    // key listeners
+    let _lastPressedKeys = {};
+    const _pressedKeys = {};
+    window.onkeydown = e => _pressedKeys[e.keyCode] = true;
+    window.onkeyup = e => _pressedKeys[e.keyCode] = false;
+    const isKeyDown = key => {
+      // handle invalid key
+      if (typeof key !== 'string' || key.length !== 1) {
+        throw new Error(\`\${key} is an invalid key\`);
+      }
+      // handle key code
+      const keyCode = key.toUpperCase().charCodeAt(0);
+      return _pressedKeys[keyCode];
+    }
+    const isKey = key => {
+      // handle invalid key
+      if (typeof key !== 'string' || key.length !== 1) {
+        throw new Error(\`\${key} is an invalid key\`);
+      }
+      // handle key code
+      const keyCode = key.toUpperCase().charCodeAt(0);
+      return _pressedKeys[keyCode] && !_lastPressedKeys[keyCode];
+    }
     // runs after body has loaded
-    function _start() {
+    const _start = () => {
       // get canvas and context
       _canvas = document.getElementById('canvas-game');
       _ctx = _canvas.getContext('2d');
