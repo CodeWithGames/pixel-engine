@@ -20,6 +20,12 @@ const tileGrid = 32;
 const tileGridSize = 4;
 const tileSize = tileGrid * tileGridSize;
 
+const mapGrid = 32;
+const mapGridSize = 4;
+const mapSize = mapGrid * mapGridSize;
+
+const pixelGrid = Math.floor(mapGrid / tileGridSize);
+
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
   const [currColor, setCurrColor] = useState(0);
@@ -139,12 +145,33 @@ export default function Maps() {
                 styles.tile
               }
               key={`${i}`}
-              style={{ background: colors[tiles[maps[0][0]][0][0]] }}
+              style={{ background: colors[tiles[maps[i][0]][0]] }}
             >
             </div>
           )
         }
       </div>
+      <canvas
+        id="canvas-map"
+        className={styles.canvas}
+        width={mapSize}
+        height={mapSize}
+        onMouseDown={e => {
+          // get x and y on canvas
+          const currX = e.clientX - mapCanvas.offsetLeft + window.scrollX;
+          const currY = e.clientY - mapCanvas.offsetTop + window.scrollY;
+          // get x and y in map units
+          const tileX = Math.floor(currX / mapGrid);
+          const tileY = Math.floor(currY / mapGrid);
+          // set map at index
+          const mapIndex = tileY * mapGridSize + tileX;
+          const newMaps = maps.slice();
+          const newMap = newMaps[currMap].slice();
+          newMap.splice(mapIndex, 1, currTile);
+          newMaps.splice(currMap, 1, newMap);
+          setMaps(newMaps);
+        }}
+      />
     </div>
   );
 }
