@@ -13,6 +13,9 @@ const defaultColors = [
 const defaultTiles = Array(16).fill(Array(16).fill(0));
 const defaultMaps = Array(16).fill(Array(16).fill(0));
 
+let tileCanvas, tileCtx;
+let mapCanvas, mapCtx;
+
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
   const [currColor, setCurrColor] = useState(0);
@@ -20,6 +23,27 @@ export default function Maps() {
   const [currTile, setCurrTile] = useState(0);
   const [maps, setMaps] = useState(defaultMaps);
   const [currMap, setCurrMap] = useState(0);
+
+  // draws current color onto tile
+  function drawColor(e) {
+    // get x and y on canvas
+    const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
+    const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
+    // get x and y in tile units
+    const tileX = Math.floor(currX / 16) * 16;
+    const tileY = Math.floor(currY / 16) * 16;
+    // draw color
+    tileCtx.fillStyle = colors[currColor];
+    tileCtx.fillRect(tileX, tileY, 16, 16);
+  }
+
+  // get canvas contexts on start
+  useEffect(() => {
+    tileCanvas = document.getElementById('canvas-tile');
+    tileCtx = tileCanvas.getContext('2d');
+    mapCanvas = document.getElementById('canvas-map');
+    mapCtx = mapCanvas.getContext('2d');
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -68,6 +92,13 @@ export default function Maps() {
           )
         }
       </div>
+      <canvas
+        id="canvas-tile"
+        className={styles.canvas}
+        width={128}
+        height={128}
+        onMouseDown={e => drawColor(e)}
+      />
       <h1>Maps</h1>
       <div className={styles.tilegrid}>
         {
