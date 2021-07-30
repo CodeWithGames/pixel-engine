@@ -57,6 +57,9 @@ export default function Maps() {
 
   // draws current map
   function drawMap() {
+    // clear canvas
+    mapCtx.fillStyle = gridColor;
+    mapCtx.fillRect(0, 0, mapSize, mapSize);
     // get current map
     const map = maps[currMap];
     // for each tile
@@ -72,9 +75,15 @@ export default function Maps() {
             const colorIndex = yp * tileGridSize + xp;
             const color = colors[tile[colorIndex]];
             mapCtx.fillStyle = color;
-            const xm = x * mapGrid + xp * pixelGrid;
-            const ym = y * mapGrid + yp * pixelGrid;
-            mapCtx.fillRect(xm, ym, pixelGrid, pixelGrid);
+            let xm = x * mapGrid + xp * pixelGrid;
+            let ym = y * mapGrid + yp * pixelGrid;
+            let xs = pixelGrid;
+            let ys = pixelGrid;
+            if (xp === 0) { xm += 1; xs -= 1; }
+            if (yp === 0) { ym += 1; ys -= 1; }
+            if (xp === tileGridSize - 1) xs -= 1;
+            if (yp === tileGridSize - 1) ys -= 1;
+            mapCtx.fillRect(xm, ym, xs, ys);
           }
         }
       }
