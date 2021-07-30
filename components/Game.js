@@ -76,7 +76,34 @@ export default function Game(props) {
     const _colors = ${JSON.stringify(props.colors)};
     const _tiles = ${JSON.stringify(props.tiles)};
     const _maps = ${JSON.stringify(props.maps)};
+    const loadMap = index => {
+      // get map
+      const map = _maps[index];
+      // for each tile
+      for (let y = 0; y < ${mapSize}; y++) {
+        for (let x = 0; x < ${mapSize}; x++) {
+          // get tile
+          const tileIndex = y * ${mapSize} + x;
+          const tile = _tiles[map[tileIndex]];
+          // for each pixel
+          for (let yp = 0; yp < ${tileSize}; yp++) {
+            for (let xp = 0; xp < ${tileSize}; xp++) {
+              // set fill color
+              const colorIndex = yp * ${tileSize} + xp;
+              const color = _colors[tile[colorIndex]];
+              _ctx.fillStyle = color;
+              // get fill position and size
+              let xm = x * ${mapGridPixels} + xp * ${tileGridPixels};
+              let ym = y * ${mapGridPixels} + yp * ${tileGridPixels};
+              // fill pixel
+              _ctx.fillRect(xm, ym, ${tileGridPixels}, ${tileGridPixels});
+            }
+          }
+        }
+      }
+    };
     const loadTile = (x, y, index) => {
+      // get tile
       const tile = _tiles[index];
       // for each pixel
       for (let yp = 0; yp < ${tileSize}; yp++) {
