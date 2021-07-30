@@ -12,7 +12,7 @@ export default function Index() {
   const [code, setCode] = useState('');
 
   return (
-    <div>
+    <div className={styles.container}>
       <Code setCode={setCode} />
       <Maps />
       <Game code={code} />

@@ -7,7 +7,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 128px;
-  margin: 20px;
+  margin: 20px auto;
   outline: 4px solid #000;
 }
 
@@ -27,4 +27,5 @@
 
 .canvas {
   background: #fff;
+  margin: 20px;
 }
