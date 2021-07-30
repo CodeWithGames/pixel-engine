@@ -3,13 +3,17 @@ import styles from '../styles/Game.module.css';
 const canvasPixels = 256;
 
 export default function Game(props) {
+  const { tileSize, mapSize } = props;
+  const mapGridPixels = Math.floor(canvasPixels / mapSize);
+  const tileGridPixels = Math.floor(mapGridPixels / tileSize);
+
   const srcDoc =
 `<html>
   <body onload="_start()">
     <canvas
       id="canvas-game"
-      width=${width}
-      height=${height}
+      width=${canvasPixels}
+      height=${canvasPixels}
     />
   </body>
   <style>
@@ -24,10 +28,10 @@ export default function Game(props) {
   <script>
     // canvas functions
     let _canvas, _ctx;
-    const clear = () => _ctx.clearRect(0, 0, ${width}, ${height});
+    const clear = () => _ctx.clearRect(0, 0, ${canvasPixels}, ${canvasPixels});
     const fill = color => {
       _ctx.fillStyle = color;
-      _ctx.fillRect(0, 0, ${width}, ${height});
+      _ctx.fillRect(0, 0, ${canvasPixels}, ${canvasPixels});
     }
     const rect = (x, y, w, h, color) => {
       _ctx.fillStyle = color;
@@ -89,8 +93,8 @@ export default function Game(props) {
         title="game"
         sandbox="allow-scripts"
         srcDoc={srcDoc}
-        width={width}
-        height={height}
+        width={canvasPixels}
+        height={canvasPixels}
         frameBorder="0"
       />
     </div>
