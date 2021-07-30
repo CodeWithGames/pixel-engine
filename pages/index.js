@@ -8,14 +8,34 @@ import styles from '../styles/Index.module.css';
 
 const Code = dynamic(import('../components/Code.js'), { ssr: false });
 
+const tileSize = 8;
+const mapSize = 8;
+
 export default function Index() {
+  const [colors, setColors] = useState(undefined);
+  const [tiles, setTiles] = useState(undefined);
+  const [maps, setMaps] = useState(undefined);
+
   const [code, setCode] = useState('');
 
   return (
     <div className={styles.container}>
       <Code setCode={setCode} />
-      <Maps />
-      <Game code={code} />
+      <Maps
+        setColors={setColors}
+        setTiles={setTiles}
+        setMaps={setMaps}
+        tileSize={tileSize}
+        mapSize={mapSize}
+      />
+      <Game
+        code={code}
+        colors={colors}
+        tiles={tiles}
+        maps={maps}
+        tileSize={tileSize}
+        mapSize={mapSize}
+      />
     </div>
   );
 }

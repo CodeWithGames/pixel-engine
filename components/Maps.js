@@ -9,15 +9,11 @@ const gridColor = '#dddddd';
 let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
 
-const tileGrid = 16;
-const tileGridSize = 8;
-const tileSize = tileGrid * tileGridSize;
+const tileCount = 16;
+const mapCount = 16;
 
-const mapGrid = 32;
-const mapGridSize = 8;
-const mapSize = mapGrid * mapGridSize;
-
-const pixelGrid = Math.floor(mapGrid / tileGridSize);
+const tileGridPixels = 16;
+const mapGridPixels = 32;
 
 const defaultColors = [
   '#ffffff', '#aaaaaa', '#555555', '#000000',

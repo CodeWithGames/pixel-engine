@@ -1,7 +1,6 @@
 import styles from '../styles/Game.module.css';
 
-const width = 256;
-const height = 256;
+const canvasPixels = 256;
 
 export default function Game(props) {
   const srcDoc =
