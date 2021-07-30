@@ -6,9 +6,9 @@ A minimalist online game engine.
 
 `clear()`: clears canvas
 
-`fill(color)`: draws rect of `color` color over full canvas
+`fill(color)`: draws rect of color `color` over full canvas
 
-`rect(x, y, w, h, color)`: draws rect of `w` width, `h` height, and `color` color at `x`, `y`
+`rect(x, y, w, h, color)`: draws rect of width `w`, height `h`, and color `color` at `x`, `y`
 
 ## Game Loop
 
@@ -23,6 +23,12 @@ A minimalist online game engine.
 `isKeyDown(key)`: returns whether given character `key` is pressed
 
 `isKey(key)`: returns whether given character `key` was pressed in the last frame
+
+## Maps
+
+`loadMap(index)`: loads map of index `index` to canvas
+
+`loadTile(x, y, index)`: loads tile of index `index` at `x`, `y`
 
 ## Example
 
