@@ -1,3 +1,35 @@
+.colorgrid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.colorinput {
+  width: 32px;
+  height: 32px;
+  position: relative;
+}
+
+.colorinput > svg {
+  width: 50%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.5);
+  border-top-left-radius: 5px;
+}
+
+.colorinput > input {
+  width: 50%;
+  height: 50%;
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
 .canvas {
   background: #fff;
 }

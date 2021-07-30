@@ -1,3 +1,5 @@
+import EditIcon from '@material-ui/icons/Edit';
+
 import styles from '../styles/Maps.module.css';
 
 import { useEffect, useState } from 'react';
@@ -23,6 +25,7 @@ export default function Maps() {
               key={`${i}`}
               style={{ background: color }}
             >
+              <EditIcon />
               <input
                 type="color"
                 value={color}
