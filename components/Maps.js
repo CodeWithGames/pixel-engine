@@ -10,14 +10,16 @@ const defaultColors = [
   '#777777', '#666666', '#555555', '#444444',
   '#333333', '#222222', '#111111', '#000000'
 ];
-
 const defaultTiles = Array(16).fill(Array(16).fill(0));
+const defaultMaps = Array(16).fill(Array(16).fill(0));
 
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
   const [currColor, setCurrColor] = useState(0);
   const [tiles, setTiles] = useState(defaultTiles);
   const [currTile, setCurrTile] = useState(0);
+  const [maps, setMaps] = useState(defaultMaps);
+  const [currMap, setCurrMap] = useState(0);
 
   return (
     <div className={styles.container}>
@@ -61,6 +63,24 @@ export default function Maps() {
               }
               key={`${i}`}
               style={{ background: colors[tiles[0][0]] }}
+            >
+            </div>
+          )
+        }
+      </div>
+      <h1>Maps</h1>
+      <div className={styles.tilegrid}>
+        {
+          maps.map((map, i) =>
+            <div
+              onClick={() => setCurrMap(i)}
+              className={
+                currMap === i ?
+                `${styles.tile} ${styles.selected}` :
+                styles.tile
+              }
+              key={`${i}`}
+              style={{ background: colors[tiles[maps[0][0]][0][0]] }}
             >
             </div>
           )
