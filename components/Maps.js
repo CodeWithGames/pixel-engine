@@ -36,6 +36,9 @@ export default function Maps() {
   const [maps, setMaps] = useState(defaultMaps);
   const [currMap, setCurrMap] = useState(0);
 
+  const [tileGridded, setTileGridded] = useState(true);
+  const [mapGridded, setMapGridded] = useState(true);
+
   // draws current tile
   function drawTile() {
     // clear canvas
@@ -46,11 +49,24 @@ export default function Maps() {
     // for each pixel
     for (let y = 0; y < tileGridSize; y++) {
       for (let x = 0; x < tileGridSize; x++) {
-        // draw color
+        // set fill color
         const colorIndex = y * tileGridSize + x;
         const color = colors[tile[colorIndex]];
         tileCtx.fillStyle = color;
-        tileCtx.fillRect(x * tileGrid + 1, y * tileGrid + 1, tileGrid - 2, tileGrid - 2);
+        // set fill position and size
+         const xm = x * tileGrid;
+         const ym = y * tileGrid;
+         const xs = tileGrid;
+         const ys = tileGrid;
+         // if tile gridded, adjust fill
+         if (tileGridded) {
+           xm += 1;
+           ym += 1;
+           xs -= 2;
+           ys -= 2;
+         }
+         // fill tile
+         tileCtx.fillRect(xm, ym, xs, ys);
       }
     }
   }
@@ -71,18 +87,23 @@ export default function Maps() {
         // for each pixel
         for (let yp = 0; yp < tileGridSize; yp++) {
           for (let xp = 0; xp < tileGridSize; xp++) {
-            // draw color
+            // set fill color
             const colorIndex = yp * tileGridSize + xp;
             const color = colors[tile[colorIndex]];
             mapCtx.fillStyle = color;
+            // get fill position and size
             let xm = x * mapGrid + xp * pixelGrid;
             let ym = y * mapGrid + yp * pixelGrid;
             let xs = pixelGrid;
             let ys = pixelGrid;
-            if (xp === 0) { xm += 1; xs -= 1; }
-            if (yp === 0) { ym += 1; ys -= 1; }
-            if (xp === tileGridSize - 1) xs -= 1;
-            if (yp === tileGridSize - 1) ys -= 1;
+            // if map gridded, adjust fill
+            if (mapGridded) {
+              if (xp === 0) { xm += 1; xs -= 1; }
+              if (yp === 0) { ym += 1; ys -= 1; }
+              if (xp === tileGridSize - 1) xs -= 1;
+              if (yp === tileGridSize - 1) ys -= 1;
+            }
+            // fill pixel
             mapCtx.fillRect(xm, ym, xs, ys);
           }
         }
@@ -101,12 +122,12 @@ export default function Maps() {
   // draw tile when colors or tiles change
   useEffect(() => {
     drawTile();
-  }, [colors, tiles, currTile]);
+  }, [colors, tiles, currTile, tileGridded]);
 
   // draw map when colors, tiles, or maps change
   useEffect(() => {
     drawMap();
-  }, [colors, tiles, maps, currMap]);
+  }, [colors, tiles, maps, currMap, mapGridded]);
 
   return (
     <div className={styles.container}>
@@ -157,7 +178,9 @@ export default function Maps() {
       </div>
       <canvas
         id="canvas-tile"
-        className={styles.canvas}
+        className={
+          tileGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
+        }
         width={tileSize}
         height={tileSize}
         onMouseDown={e => {
@@ -175,6 +198,11 @@ export default function Maps() {
           newTiles.splice(currTile, 1, newTile);
           setTiles(newTiles);
         }}
+      />
+      <input
+        type="checkbox"
+        checked={tileGridded}
+        onChange={e => setTileGridded(e.target.checked)}
       />
       <h1>Maps</h1>
       <div className={styles.tilegrid}>
@@ -196,7 +224,9 @@ export default function Maps() {
       </div>
       <canvas
         id="canvas-map"
-        className={styles.canvas}
+        className={
+          mapGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
+        }
         width={mapSize}
         height={mapSize}
         onMouseDown={e => {
@@ -214,6 +244,11 @@ export default function Maps() {
           newMaps.splice(currMap, 1, newMap);
           setMaps(newMaps);
         }}
+      />
+      <input
+        type="checkbox"
+        checked={mapGridded}
+        onChange={e => setMapGridded(e.target.checked)}
       />
     </div>
   );
