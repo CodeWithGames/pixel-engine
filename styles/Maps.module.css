@@ -3,7 +3,7 @@
   margin: 0 20px;
 }
 
-.colorgrid {
+.tilegrid {
   display: flex;
   flex-wrap: wrap;
   width: 128px;
@@ -11,7 +11,7 @@
   outline: 4px solid #000;
 }
 
-.colorinput {
+.tile {
   width: 32px;
   height: 32px;
   position: relative;
