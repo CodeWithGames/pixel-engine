@@ -13,32 +13,37 @@ const defaultColors = [
 
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
+  const [currColor, setCurrColor] = useState(0);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Colors</h1>
       <div className={styles.colorgrid}>
         {
           colors.map((color, i) =>
             <div
-              className={styles.colorinput}
+              onClick={() => setCurrColor(i)}
+              className={
+                currColor === i ?
+                `${styles.colorinput} ${styles.selected}` :
+                styles.colorinput
+              }
               key={`${i}`}
               style={{ background: color }}
             >
-              <EditIcon />
-              <input
-                type="color"
-                value={color}
-                onChange={e => {
-                  const newColors = colors.slice();
-                  newColors.splice(i, 1, e.target.value);
-                  setColors(newColors);
-                }}
-              />
             </div>
           )
         }
       </div>
+      <input
+        type="color"
+        value={colors[currColor]}
+        onChange={e => {
+          const newColors = colors.slice();
+          newColors.splice(currColor, 1, e.target.value);
+          setColors(newColors);
+        }}
+      />
     </div>
   );
 }

@@ -1,33 +1,28 @@
+.container {
+  text-align: center;
+  margin: 0 20px;
+}
+
 .colorgrid {
   display: flex;
   flex-wrap: wrap;
+  width: 128px;
+  margin: 20px;
+  outline: 4px solid #000;
 }
 
 .colorinput {
   width: 32px;
   height: 32px;
   position: relative;
-}
-
-.colorinput > svg {
-  width: 50%;
-  height: 50%;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.5);
-  border-top-left-radius: 5px;
-}
-
-.colorinput > input {
-  width: 50%;
-  height: 50%;
-  margin: 0;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  opacity: 0;
   cursor: pointer;
+}
+
+.selected {
+  box-sizing: content-box;
+  box-shadow: inset 0 0 0 4px #000;
+  outline: 4px solid #fff;
+  z-index: 1;
 }
 
 .canvas {
