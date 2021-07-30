@@ -6,27 +6,27 @@ import { useEffect, useState } from 'react';
 
 const gridColor = '#dddddd';
 
-const defaultColors = [
-  '#ffffff', '#eeeeee', '#dddddd', '#cccccc',
-  '#bbbbbb', '#aaaaaa', '#999999', '#888888',
-  '#777777', '#666666', '#555555', '#444444',
-  '#333333', '#222222', '#111111', '#000000'
-];
-const defaultTiles = Array(16).fill(Array(16).fill(0));
-const defaultMaps = Array(16).fill(Array(16).fill(0));
-
 let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
 
-const tileGrid = 32;
-const tileGridSize = 4;
+const tileGrid = 16;
+const tileGridSize = 8;
 const tileSize = tileGrid * tileGridSize;
 
 const mapGrid = 32;
-const mapGridSize = 4;
+const mapGridSize = 8;
 const mapSize = mapGrid * mapGridSize;
 
 const pixelGrid = Math.floor(mapGrid / tileGridSize);
+
+const defaultColors = [
+  '#ffffff', '#aaaaaa', '#555555', '#000000',
+  '#ff0000', '#00ff00', '#0000ff', '#ff9900',
+  '#ffff00', '#ff00ff', '#00ffff', '#ff0099',
+  '#ff9999', '#99ff99', '#9999ff', '#ffff99'
+];
+const defaultTiles = Array(16).fill(Array(tileGridSize ** 2).fill(0));
+const defaultMaps = Array(16).fill(Array(mapGridSize ** 2).fill(0));
 
 export default function Maps() {
   const [colors, setColors] = useState(defaultColors);
@@ -199,11 +199,15 @@ export default function Maps() {
           setTiles(newTiles);
         }}
       />
-      <input
-        type="checkbox"
-        checked={tileGridded}
-        onChange={e => setTileGridded(e.target.checked)}
-      />
+      <div>
+        <label htmlFor="input-tilegridded">Grid</label>
+        <input
+          id="input-tilegridded"
+          type="checkbox"
+          checked={tileGridded}
+          onChange={e => setTileGridded(e.target.checked)}
+        />
+      </div>
       <h1>Maps</h1>
       <div className={styles.tilegrid}>
         {
@@ -245,11 +249,15 @@ export default function Maps() {
           setMaps(newMaps);
         }}
       />
-      <input
-        type="checkbox"
-        checked={mapGridded}
-        onChange={e => setMapGridded(e.target.checked)}
-      />
+      <div>
+        <label htmlFor="input-mapgridded">Grid</label>
+        <input
+          id="input-mapgridded"
+          type="checkbox"
+          checked={mapGridded}
+          onChange={e => setMapGridded(e.target.checked)}
+        />
+      </div>
     </div>
   );
 }
