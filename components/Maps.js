@@ -50,6 +50,30 @@ export default function Maps() {
     }
   }
 
+  // draws current map
+  function drawMap() {
+    // get current map
+    const map = maps[currMap];
+    // for each tile
+    for (let y = 0; y < mapGridSize; y++) {
+      for (let x = 0; x < mapGridSize; x++) {
+        // get tile
+        const tileIndex = y * mapGridSize + x;
+        const tile = tiles[map[tileIndex]];
+        // for each pixel
+        for (let yp = 0; yp < tileGridSize; yp++) {
+          for (let xp = 0; xp < tileGridSize; xp++) {
+            // draw color
+            const colorIndex = yp * tileGridSize + xp;
+            const color = colors[tile[colorIndex]];
+            mapCtx.fillStyle = color;
+            const xm = x * mapGrid + xp * pixelGrid;
+            const ym = y * mapGrid + yp * pixelGrid;
+            mapCtx.fillRect(xm, ym, pixelGrid, pixelGrid);
+          }
+        }
+      }
+    }
   }
 
   // get canvas contexts on start
@@ -64,6 +88,11 @@ export default function Maps() {
   useEffect(() => {
     drawTile();
   }, [colors, tiles, currTile]);
+
+  // draw map when colors, tiles, or maps change
+  useEffect(() => {
+    drawMap();
+  }, [colors, tiles, maps, currMap]);
 
   return (
     <div className={styles.container}>
