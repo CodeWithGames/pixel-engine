@@ -1,4 +1,5 @@
 import AceEditor from 'react-ace';
+import { Parser } from 'acorn';
 
 import { useEffect, useState } from 'react';
 
@@ -25,31 +26,25 @@ function draw() {
 
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
+  const [tokens, setTokens] = useState(-1);
 
-  // counts number of tokens in given javascript
-  function countTokens(text) {
+  // compiles code
+  function compile() {
+    // count tokens
     let tokens = 0;
-    const lines = text.split('\n');
-    for (const line of lines) {
-      let isToken = false;
-      for (const char of line) {
-        if (/\w/.test(char)) isToken = true;
-        else {
-          if (isToken) { isToken = false; tokens++; }
-          if (!/\s/.test(char)) tokens++;
-        }
-      }
-      if (isToken) tokens++;
-    }
-    return tokens;
+    for (const token of Parser.tokenizer(code)) tokens++;
+    setTokens(tokens);
   }
 
   // update props
-  useEffect(() => props.setCode(code), [code])
+  useEffect(() => {
+    setTokens(-1);
+    props.setCode(code);
+  }, [code])
 
   return (
-    <div>
-      <p>{countTokens(code)} tokens</p>
+    <div className={styles.container}>
+      <p>{tokens} tokens</p>
       <AceEditor
         value={code}
         onChange={v => setCode(v)}
@@ -59,8 +54,8 @@ export default function Code(props) {
         showPrintMargin={false}
         setOptions={{ useWorker: false }}
         tabSize={2}
-        height="100%"
       />
+      <button onClick={compile}>Compile</button>
     </div>
   );
 }
