@@ -1,6 +1,24 @@
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
+
+import { useState } from 'react';
+
 import styles from '../styles/Game.module.css';
 
 const canvasPixels = 256;
+
+const emptySrc =
+`<html>
+  <body></body>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+  </style>
+</html>
+`;
 
 export default function Game(props) {
   const { tileSize, mapSize } = props;
@@ -134,12 +152,36 @@ export default function Game(props) {
 </html>
 `;
 
+  const [playing, setPlaying] = useState(false);
+  const [source, setSource] = useState(emptySrc);
+
+  // sets source doc
+  function startPlaying() {
+    setSource(srcDoc);
+    setPlaying(true);
+  }
+
+  // clears source doc
+  function stopPlaying() {
+    setSource(emptySrc);
+    setPlaying(false);
+  }
+
   return (
     <div>
+      {
+        playing ?
+        <button onClick={stopPlaying}>
+          <PauseIcon />
+        </button> :
+        <button onClick={startPlaying}>
+          <PlayArrowIcon />
+        </button>
+      }
       <iframe
         title="game"
         sandbox="allow-scripts"
-        srcDoc={srcDoc}
+        srcDoc={source}
         width={canvasPixels}
         height={canvasPixels}
         frameBorder="0"
