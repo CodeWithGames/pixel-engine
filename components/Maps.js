@@ -22,6 +22,8 @@ const defaultColors = [
   '#990000', '#009900', '#000099', '#663333'
 ];
 
+let sketchingTile = false;
+
 export default function Maps(props) {
   const { tileSize, mapSize } = props;
   const tilePixels = tileGridPixels * tileSize;
@@ -113,6 +115,26 @@ export default function Maps(props) {
     }
   }
 
+  // sketches tile with given mouse event data
+  function sketchTile(e) {
+    // get x and y on canvas
+    const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
+    const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
+    // get x and y in tile units
+    const tileX = Math.floor(currX / tileGridPixels);
+    const tileY = Math.floor(currY / tileGridPixels);
+    // get tile
+    const tileIndex = tileY * tileSize + tileX;
+    const newTiles = tiles.slice();
+    const newTile = newTiles[currTile].slice();
+    // return if unchanged
+    if (newTile[tileIndex] === currColor) return;
+    // set tile
+    newTile.splice(tileIndex, 1, currColor);
+    newTiles.splice(currTile, 1, newTile);
+    setTiles(newTiles);
+  }
+
   // get canvas contexts on start
   useEffect(() => {
     tileCanvas = document.getElementById('canvas-tile');
@@ -190,21 +212,10 @@ export default function Maps(props) {
         }
         width={tilePixels}
         height={tilePixels}
-        onMouseDown={e => {
-          // get x and y on canvas
-          const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
-          const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
-          // get x and y in tile units
-          const tileX = Math.floor(currX / tileGridPixels);
-          const tileY = Math.floor(currY / tileGridPixels);
-          // set tile at index
-          const tileIndex = tileY * tileSize + tileX;
-          const newTiles = tiles.slice();
-          const newTile = newTiles[currTile].slice();
-          newTile.splice(tileIndex, 1, currColor);
-          newTiles.splice(currTile, 1, newTile);
-          setTiles(newTiles);
-        }}
+        onMouseDown={e => { sketchingTile = true; sketchTile(e); }}
+        onMouseMove={e => { if (sketchingTile) sketchTile(e); }}
+        onMouseUp={e => { sketchingTile = false; }}
+        onMouseLeave={e => { sketchingTile = false; }}
       />
       <div>
         <label htmlFor="input-tilegridded">Grid</label>
