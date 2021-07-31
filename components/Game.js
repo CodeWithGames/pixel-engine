@@ -46,10 +46,11 @@ export default function Game(props) {
   <script>
     // canvas functions
     let _canvas, _ctx;
-    const clear = () => _ctx.clearRect(0, 0, ${canvasPixels}, ${canvasPixels});
+    const _canvasPixels = ${canvasPixels};
+    const clear = () => _ctx.clearRect(0, 0, _canvasPixels, _canvasPixels);
     const fill = color => {
       _ctx.fillStyle = color;
-      _ctx.fillRect(0, 0, ${canvasPixels}, ${canvasPixels});
+      _ctx.fillRect(0, 0, _canvasPixels, _canvasPixels);
     }
     const rect = (x, y, w, h, color) => {
       _ctx.fillStyle = color;
@@ -94,27 +95,31 @@ export default function Game(props) {
     const _colors = ${JSON.stringify(props.colors)};
     const _tiles = ${JSON.stringify(props.tiles)};
     const _maps = ${JSON.stringify(props.maps)};
+    const _mapSize = ${mapSize};
+    const _tileSize = ${tileSize};
+    const _mapGridPixels = ${mapGridPixels};
+    const _tileGridPixels = ${tileGridPixels};
     const loadMap = index => {
       // get map
       const map = _maps[index];
       // for each tile
-      for (let y = 0; y < ${mapSize}; y++) {
-        for (let x = 0; x < ${mapSize}; x++) {
+      for (let y = 0; y < _mapSize; y++) {
+        for (let x = 0; x < _mapSize; x++) {
           // get tile
-          const tileIndex = y * ${mapSize} + x;
+          const tileIndex = y * _mapSize + x;
           const tile = _tiles[map[tileIndex]];
           // for each pixel
-          for (let yp = 0; yp < ${tileSize}; yp++) {
-            for (let xp = 0; xp < ${tileSize}; xp++) {
+          for (let yp = 0; yp < _tileSize; yp++) {
+            for (let xp = 0; xp < _tileSize; xp++) {
               // set fill color
-              const colorIndex = yp * ${tileSize} + xp;
+              const colorIndex = yp * _tileSize + xp;
               const color = _colors[tile[colorIndex]];
               _ctx.fillStyle = color;
               // get fill position and size
-              let xm = x * ${mapGridPixels} + xp * ${tileGridPixels};
-              let ym = y * ${mapGridPixels} + yp * ${tileGridPixels};
+              let xm = x * _mapGridPixels + xp * _tileGridPixels;
+              let ym = y * _mapGridPixels + yp * _tileGridPixels;
               // fill pixel
-              _ctx.fillRect(xm, ym, ${tileGridPixels}, ${tileGridPixels});
+              _ctx.fillRect(xm, ym, _tileGridPixels, _tileGridPixels);
             }
           }
         }
@@ -124,16 +129,16 @@ export default function Game(props) {
       // get tile
       const tile = _tiles[index];
       // for each pixel
-      for (let yp = 0; yp < ${tileSize}; yp++) {
-        for (let xp = 0; xp < ${tileSize}; xp++) {
+      for (let yp = 0; yp < _tileSize; yp++) {
+        for (let xp = 0; xp < _tileSize; xp++) {
           // set fill color
-          const colorIndex = yp * ${tileSize} + xp;
+          const colorIndex = yp * _tileSize + xp;
           const color = _colors[tile[colorIndex]];
           _ctx.fillStyle = color;
           // fill pixel
-          const xm = x + xp * ${tileGridPixels};
-          const ym = y + yp * ${tileGridPixels};
-          _ctx.fillRect(xm, ym, ${tileGridPixels}, ${tileGridPixels});
+          const xm = x + xp * _tileGridPixels;
+          const ym = y + yp * _tileGridPixels;
+          _ctx.fillRect(xm, ym, _tileGridPixels, _tileGridPixels);
         }
       }
     }
