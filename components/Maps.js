@@ -23,6 +23,7 @@ const defaultColors = [
 ];
 
 let sketchingTile = false;
+let sketchingMap = false;
 
 export default function Maps(props) {
   const { tileSize, mapSize } = props;
@@ -133,6 +134,26 @@ export default function Maps(props) {
     newTile.splice(tileIndex, 1, currColor);
     newTiles.splice(currTile, 1, newTile);
     setTiles(newTiles);
+  }
+
+  // sketches map with given mouse event data
+  function sketchMap(e) {
+    // get x and y on canvas
+    const currX = e.clientX - mapCanvas.offsetLeft + window.scrollX;
+    const currY = e.clientY - mapCanvas.offsetTop + window.scrollY;
+    // get x and y in map units
+    const tileX = Math.floor(currX / mapGridPixels);
+    const tileY = Math.floor(currY / mapGridPixels);
+    // get map
+    const mapIndex = tileY * mapSize + tileX;
+    const newMaps = maps.slice();
+    const newMap = newMaps[currMap].slice();
+    // return if unchanged
+    if (newMap[mapIndex] === currTile) return;
+    // set map
+    newMap.splice(mapIndex, 1, currTile);
+    newMaps.splice(currMap, 1, newMap);
+    setMaps(newMaps);
   }
 
   // get canvas contexts on start
@@ -251,21 +272,10 @@ export default function Maps(props) {
         }
         width={mapPixels}
         height={mapPixels}
-        onMouseDown={e => {
-          // get x and y on canvas
-          const currX = e.clientX - mapCanvas.offsetLeft + window.scrollX;
-          const currY = e.clientY - mapCanvas.offsetTop + window.scrollY;
-          // get x and y in map units
-          const tileX = Math.floor(currX / mapGridPixels);
-          const tileY = Math.floor(currY / mapGridPixels);
-          // set map at index
-          const mapIndex = tileY * mapSize + tileX;
-          const newMaps = maps.slice();
-          const newMap = newMaps[currMap].slice();
-          newMap.splice(mapIndex, 1, currTile);
-          newMaps.splice(currMap, 1, newMap);
-          setMaps(newMaps);
-        }}
+        onMouseDown={e => { sketchingMap = true; sketchMap(e); }}
+        onMouseMove={e => { if (sketchingMap) sketchMap(e); }}
+        onMouseUp={e => { sketchingMap = false; }}
+        onMouseLeave={e => { sketchingMap = false; }}
       />
       <div>
         <label htmlFor="input-mapgridded">Grid</label>
