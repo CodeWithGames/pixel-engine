@@ -1,5 +1,10 @@
 .container {
   text-align: center;
+  display: flex;
+  margin: 0 20px;
+}
+
+.container > div {
   margin: 0 20px;
 }
 
@@ -27,7 +32,6 @@
 
 .canvas {
   background: #fff;
-  margin: 20px;
 }
 
 .gridded {
