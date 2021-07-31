@@ -24,15 +24,33 @@ function draw() {
 }
 `;
 
+const maxTokens = 2048;
+
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
   const [tokens, setTokens] = useState(-1);
+  const [error, setError] = useState('');
 
   // compiles code
   function compile() {
+    setError('');
+    // parse to check for errors
+    try {
+      Parser.parse(code);
+    } catch (e) {
+      setError(e);
+      setTokens(-1);
+      return;
+    }
     // count tokens
     let tokens = 0;
-    for (const token of Parser.tokenizer(code)) tokens++;
+    try {
+      for (const token of Parser.tokenizer(code)) tokens++;
+    } catch(e) {
+      setError(e);
+      setTokens(-1);
+      return;
+    }
     setTokens(tokens);
   }
 
@@ -44,7 +62,12 @@ export default function Code(props) {
 
   return (
     <div className={styles.container}>
-      <p>{tokens} tokens</p>
+      <p className={
+        (tokens >= 0 && tokens <= maxTokens) ?
+        styles.validtext : styles.errortext
+      }>
+        {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
+      </p>
       <AceEditor
         value={code}
         onChange={v => setCode(v)}
@@ -56,6 +79,7 @@ export default function Code(props) {
         tabSize={2}
       />
       <button onClick={compile}>Compile</button>
+      <p className={styles.errortext}>{error.toString()}</p>
     </div>
   );
 }
