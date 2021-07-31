@@ -26,11 +26,30 @@ function draw() {
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
 
+  // counts number of tokens in given javascript
+  function countTokens(text) {
+    let tokens = 0;
+    const lines = text.split('\n');
+    for (const line of lines) {
+      let isToken = false;
+      for (const char of line) {
+        if (/\w/.test(char)) isToken = true;
+        else {
+          if (isToken) { isToken = false; tokens++; }
+          if (!/\s/.test(char)) tokens++;
+        }
+      }
+      if (isToken) tokens++;
+    }
+    return tokens;
+  }
+
   // update props
   useEffect(() => props.setCode(code), [code])
 
   return (
     <div>
+      <p>{countTokens(code)} tokens</p>
       <AceEditor
         value={code}
         onChange={v => setCode(v)}
