@@ -1,5 +1,6 @@
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 import { useState } from 'react';
 
@@ -172,6 +173,14 @@ export default function Game(props) {
     setPlaying(false);
   }
 
+  // downloads game as an html file
+  function downloadGame() {
+    const link = document.createElement('a');
+    link.download = 'game.html';
+    link.href = `data:text/html;charset=utf-8,${encodeURIComponent(srcDoc)}`;
+    link.click();
+  }
+
   return (
     <div>
       {
@@ -183,6 +192,9 @@ export default function Game(props) {
           <PlayArrowIcon />
         </button>
       }
+      <button onClick={downloadGame}>
+        <GetAppIcon />
+      </button>
       <iframe
         title="game"
         sandbox="allow-scripts"
