@@ -9,14 +9,14 @@ import styles from '../styles/Index.module.css';
 const Code = dynamic(import('../components/Code.js'), { ssr: false });
 
 const tileSize = 8;
-const mapSize = 8;
+const mapSize = 16;
 
 export default function Index() {
   const [colors, setColors] = useState(undefined);
   const [tiles, setTiles] = useState(undefined);
   const [maps, setMaps] = useState(undefined);
 
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(undefined);
 
   return (
     <div className={styles.container}>

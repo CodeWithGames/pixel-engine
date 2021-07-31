@@ -1,6 +1,6 @@
 import AceEditor from 'react-ace';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import 'ace-builds/src-noconflict/mode-javascript.js';
 import 'ace-builds/src-noconflict/theme-monokai.js';
@@ -26,6 +26,9 @@ function draw() {
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
 
+  // update props
+  useEffect(() => props.setCode(code), [code])
+
   return (
     <div>
       <AceEditor
@@ -37,9 +40,8 @@ export default function Code(props) {
         showPrintMargin={false}
         setOptions={{ useWorker: false }}
         tabSize={2}
+        height="100%"
       />
-      <button onClick={() => props.setCode(code)}>Run</button>
-      <button onClick={() => props.setCode('')}>Stop</button>
     </div>
   );
 }
