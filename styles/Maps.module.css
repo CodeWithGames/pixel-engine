@@ -8,6 +8,12 @@
   margin: 0 20px;
 }
 
+.colorinput {
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
 .tilegrid {
   display: flex;
   flex-wrap: wrap;
@@ -20,6 +26,10 @@
   width: 32px;
   height: 32px;
   position: relative;
+  cursor: pointer;
+}
+
+.options > label {
   cursor: pointer;
 }
 

@@ -1,4 +1,5 @@
 import EditIcon from '@material-ui/icons/Edit';
+import Checkbox from '@material-ui/core/Checkbox';
 
 import styles from '../styles/Maps.module.css';
 
@@ -203,6 +204,7 @@ export default function Maps(props) {
         <input
           type="color"
           value={colors[currColor]}
+          className={styles.colorinput}
           onChange={e => {
             const newColors = colors.slice();
             newColors.splice(currColor, 1, e.target.value);
@@ -241,11 +243,11 @@ export default function Maps(props) {
           onMouseUp={e => { sketchingTile = false; }}
           onMouseLeave={e => { sketchingTile = false; }}
         />
-        <div>
+        <div className={styles.options}>
           <label htmlFor="input-tilegridded">Grid</label>
-          <input
+          <Checkbox
             id="input-tilegridded"
-            type="checkbox"
+            color="default"
             checked={tileGridded}
             onChange={e => setTileGridded(e.target.checked)}
           />
@@ -282,11 +284,11 @@ export default function Maps(props) {
           onMouseUp={e => { sketchingMap = false; }}
           onMouseLeave={e => { sketchingMap = false; }}
         />
-        <div>
+        <div className={styles.options}>
           <label htmlFor="input-mapgridded">Grid</label>
-          <input
+          <Checkbox
             id="input-mapgridded"
-            type="checkbox"
+            color="default"
             checked={mapGridded}
             onChange={e => setMapGridded(e.target.checked)}
           />
