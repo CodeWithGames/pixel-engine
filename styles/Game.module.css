@@ -1,0 +1,17 @@
+.container > h1 {
+  text-align: center;
+}
+
+.frame {
+  border: 4px solid #000;
+}
+
+.toolbar {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar > button {
+  margin: 5px;
+}

@@ -1,3 +1,5 @@
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -182,21 +184,22 @@ export default function Game(props) {
   }
 
   return (
-    <div>
-      {
-        playing ?
-        <button onClick={stopPlaying}>
-          <PauseIcon />
-        </button> :
-        <button onClick={startPlaying}>
-          <PlayArrowIcon />
-        </button>
-      }
-      <button onClick={downloadGame}>
-        <GetAppIcon />
-      </button>
+    <div className={styles.container}>
+      <h1>Game</h1>
+      <div className={styles.toolbar}>
+        <Button
+          variant="contained"
+          onClick={playing ? stopPlaying : startPlaying}
+        >
+          {playing ? <PauseIcon /> : <PlayArrowIcon />}
+        </Button>
+        <Button variant="contained" onClick={downloadGame}>
+          <GetAppIcon />
+        </Button>
+      </div>
       <iframe
         title="game"
+        className={styles.frame}
         sandbox="allow-scripts"
         srcDoc={source}
         width={canvasPixels}
