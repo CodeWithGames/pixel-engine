@@ -1,41 +1,18 @@
-import Game from '../components/Game.js';
-import Maps from '../components/Maps.js';
-
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import firebase from 'firebase/app';
 
 import styles from '../styles/Index.module.css';
 
-const Code = dynamic(import('../components/Code.js'), { ssr: false });
-
-const tileSize = 8;
-const mapSize = 16;
-
 export default function Index() {
-  const [colors, setColors] = useState(undefined);
-  const [tiles, setTiles] = useState(undefined);
-  const [maps, setMaps] = useState(undefined);
-
-  const [code, setCode] = useState(undefined);
+  // opens google sign in popup
+  function signInWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    firebase.auth().signInWithPopup(provider);
+  }
 
   return (
     <div className={styles.container}>
-      <Code setCode={setCode} />
-      <Maps
-        setColors={setColors}
-        setTiles={setTiles}
-        setMaps={setMaps}
-        tileSize={tileSize}
-        mapSize={mapSize}
-      />
-      <Game
-        code={code}
-        colors={colors}
-        tiles={tiles}
-        maps={maps}
-        tileSize={tileSize}
-        mapSize={mapSize}
-      />
+      <h1>Pixel Engine</h1>
+      <button onClick={signInWithGoogle}>Sign in with Google</button>
     </div>
   );
 }
