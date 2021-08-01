@@ -1,3 +1,5 @@
+import Button from '@material-ui/core/Button';
+import DescriptionIcon from '@material-ui/icons/Description';
 import AceEditor from 'react-ace';
 import { Parser } from 'acorn';
 
@@ -24,7 +26,7 @@ function draw() {
 }
 `;
 
-const maxTokens = 2048;
+const maxTokens = 4096;
 
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
@@ -62,12 +64,7 @@ export default function Code(props) {
 
   return (
     <div className={styles.container}>
-      <p className={
-        (tokens >= 0 && tokens <= maxTokens) ?
-        styles.validtext : styles.errortext
-      }>
-        {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
-      </p>
+      <h1>Code</h1>
       <AceEditor
         value={code}
         onChange={v => setCode(v)}
@@ -78,8 +75,25 @@ export default function Code(props) {
         setOptions={{ useWorker: false }}
         tabSize={2}
       />
-      <button onClick={compile}>Compile</button>
-      <p className={styles.errortext}>{error.toString()}</p>
+      <div className={styles.toolbar}>
+        <Button
+          variant="contained"
+          onClick={compile}
+          startIcon={<DescriptionIcon />}
+        >
+          Compile
+        </Button>
+      </div>
+      <p className={`
+        ${styles.tokencount}
+        ${(tokens >= 0 && tokens <= maxTokens) ?
+        styles.validtext : styles.errortext}
+      `}>
+        {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
+      </p>
+      <p className={`${styles.errortext} ${styles.error}`}>
+        {error.toString()}
+      </p>
     </div>
   );
 }

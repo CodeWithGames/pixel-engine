@@ -1,7 +1,29 @@
+.container > h1 {
+  text-align: center;
+}
+
 .validtext {
   color: green;
 }
 
 .errortext {
   color: red;
+}
+
+.toolbar {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.toolbar > button {
+  margin: 5px;
+}
+
+.tokencount {
+  margin: 10px;
+}
+
+.error {
+  margin: 10px;
 }
