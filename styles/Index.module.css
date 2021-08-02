@@ -1,3 +1,21 @@
 .container {
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centerbox {
+  box-shadow: 0 0 10px #333;
+  padding: 0 20px;
+  border-radius: 20px;
+}
+
+.centerbox > h1 {
+  display: flex;
+  align-items: center;
+}
+
+.centerbox > h1 > div {
+  margin-right: 10px!important;
 }
