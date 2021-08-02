@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button';
 import Image from 'next/image';
 
 import firebase from 'firebase/app';
@@ -15,7 +16,13 @@ export default function Index() {
         </h1>
         {
           !firebase.auth().currentUser &&
-          <button onClick={signInWithGoogle}>Sign in with Google</button>
+          <Button
+            onClick={signInWithGoogle}
+            variant="contained"
+            color="primary"
+          >
+            Sign in with Google
+          </Button>
         }
       </div>
     </div>

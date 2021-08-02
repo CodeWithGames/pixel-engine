@@ -1,3 +1,7 @@
+import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -16,10 +20,27 @@ export default function Header() {
       </Link>
       <h1>Pixel Engine</h1>
       <span className={styles.flexfill} />
+      <Link href="/games">
+        <a className="url">Games</a>
+      </Link>
       {
         firebase.auth().currentUser ?
-        <button onClick={() => firebase.auth().signOut()}>Sign Out</button> :
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <Tooltip title="Sign Out" arrow>
+          <IconButton
+            className={styles.iconbutton}
+            onClick={() => firebase.auth().signOut()}
+          >
+            <ExitToAppIcon />
+          </IconButton>
+        </Tooltip> :
+        <Tooltip title="Sign In" arrow>
+          <IconButton
+            className={styles.iconbutton}
+            onClick={signInWithGoogle}
+          >
+            <PersonOutlineIcon />
+          </IconButton>
+        </Tooltip>
       }
     </div>
   );
