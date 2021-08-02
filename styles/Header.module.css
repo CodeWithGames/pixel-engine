@@ -1,0 +1,19 @@
+.container {
+  height: 60px;
+  background: #efefef;
+  box-shadow: 0 0 10px #333;
+  display: flex;
+  align-items: center;
+}
+
+.logolink {
+  margin: 0 10px;
+}
+
+.flexfill {
+  flex-grow: 1;
+}
+
+.container > button {
+  margin: 0 10px;
+}
