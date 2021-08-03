@@ -7,6 +7,7 @@ import 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { firebaseConfig } from '../firebaseConfig.js';
 
+import styles from '../styles/App.module.css';
 import '../styles/globals.css';
 
 // initialize firebase
@@ -28,8 +29,10 @@ export default function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet" />
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <Header />
-      <Component {...pageProps} />
+      <div className={styles.container}>
+        <Header />
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }
