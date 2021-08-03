@@ -1,4 +1,5 @@
 import Cartridge from '../components/Cartridge.js';
+import Loading from '../components/Loading.js';
 
 import firebase from 'firebase/app';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -13,15 +14,17 @@ export default function Games() {
   );
 
   // return loading if no games
-  if (!games) return <div>Loading...</div>;
+  if (!games) return <Loading />;
 
   return (
     <div>
-      {
-        games.map(game =>
-          <Cartridge game={game} key={game.id} />
-        )
-      }
+      <div className={styles.gamelist}>
+        {
+          games.map(game =>
+            <Cartridge game={game} key={game.id} />
+          )
+        }
+      </div>
     </div>
   );
 }

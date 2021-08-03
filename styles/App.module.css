@@ -6,4 +6,5 @@
 
 .container > div:last-of-type {
   flex-grow: 1;
+  margin-top: 60px;
 }

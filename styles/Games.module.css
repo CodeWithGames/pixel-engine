@@ -1,0 +1,6 @@
+.gamelist {
+  overflow: auto;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
