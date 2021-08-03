@@ -1,9 +1,10 @@
 import EditIcon from '@material-ui/icons/Edit';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import styles from '../styles/Maps.module.css';
-
 import { useEffect, useState } from 'react';
+import { palettes } from '../data/palettes.js';
+
+import styles from '../styles/Maps.module.css';
 
 const gridColor = '#dddddd';
 
@@ -15,13 +16,6 @@ const mapCount = 16;
 
 const tilePixels = 128;
 const mapPixels = 256;
-
-const defaultColors = [
-  '#ffffff', '#aaaaaa', '#555555', '#000000',
-  '#ff0000', '#00ff00', '#0000ff', '#ff9900',
-  '#ffff00', '#ff00ff', '#00ffff', '#ff0099',
-  '#990000', '#009900', '#000099', '#663333'
-];
 
 let sketchingTile = false;
 let sketchingMap = false;
@@ -35,7 +29,7 @@ export default function Maps(props) {
   const defaultTiles = Array(tileCount).fill(Array(tileSize ** 2).fill(0));
   const defaultMaps = Array(mapCount).fill(Array(mapSize ** 2).fill(0));
 
-  const [colors, setColors] = useState(defaultColors);
+  const [colors, setColors] = useState(palettes[0].colors);
   const [currColor, setCurrColor] = useState(0);
   const [tiles, setTiles] = useState(defaultTiles);
   const [currTile, setCurrTile] = useState(0);
@@ -44,6 +38,8 @@ export default function Maps(props) {
 
   const [tileGridded, setTileGridded] = useState(true);
   const [mapGridded, setMapGridded] = useState(true);
+
+  const [palette, setPalette] = useState(0);
 
   // draws current tile
   function drawTile() {
@@ -211,6 +207,20 @@ export default function Maps(props) {
             setColors(newColors);
           }}
         />
+        <select
+          value={palette}
+          onChange={e => {
+            const val = e.target.value;
+            setPalette(val);
+            setColors(palettes[val].colors);
+          }}
+        >
+          {
+            palettes.map((pal, i) =>
+              <option value={i} key={i}>{pal.name}</option>
+            )
+          }
+        </select>
       </div>
       <div>
         <h1>Tiles</h1>
