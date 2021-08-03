@@ -64,34 +64,35 @@ export default function Code(props) {
 
   return (
     <div className={styles.container}>
-      <h1>Code</h1>
-      <AceEditor
-        value={code}
-        onChange={v => setCode(v)}
-        mode="javascript"
-        theme="monokai"
-        wrapEnabled={true}
-        showPrintMargin={false}
-        setOptions={{ useWorker: false }}
-        tabSize={2}
-      />
-      <div className={styles.toolbar}>
+      <div className={styles.editor}>
+        <AceEditor
+          value={code}
+          onChange={v => setCode(v)}
+          mode="javascript"
+          theme="monokai"
+          wrapEnabled={true}
+          height="auto"
+          showPrintMargin={false}
+          setOptions={{ useWorker: false }}
+          tabSize={2}
+        />
+        <p className={`
+          ${styles.tokencount}
+          ${(tokens >= 0 && tokens <= maxTokens) ? 'greentext' : 'redtext'}
+        `}>
+          {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
+        </p>
         <Button
           variant="contained"
+          color="primary"
           onClick={compile}
           startIcon={<DescriptionIcon />}
+          className={styles.compilebutton}
         >
           Compile
         </Button>
       </div>
-      <p className={`
-        ${styles.tokencount}
-        ${(tokens >= 0 && tokens <= maxTokens) ?
-        styles.validtext : styles.errortext}
-      `}>
-        {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
-      </p>
-      <p className={`${styles.errortext} ${styles.error}`}>
+      <p className={`redtext monospace ${styles.error}`}>
         {error.toString()}
       </p>
     </div>
