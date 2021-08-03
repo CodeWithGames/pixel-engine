@@ -1,29 +1,37 @@
-.container > h1 {
-  text-align: center;
-}
-
-.validtext {
-  color: green;
-}
-
-.errortext {
-  color: red;
-}
-
-.toolbar {
-  margin: 5px;
+.container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
 
-.toolbar > button {
-  margin: 5px;
+.editor {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.editor > div:first-of-type {
+  flex-grow: 1;
 }
 
 .tokencount {
+  position: absolute;
+  top: 0;
+  right: 0;
   margin: 10px;
 }
 
+.compilebutton {
+  position: absolute!important;
+  margin: 10px!important;
+  bottom: 0;
+  right: 0;
+}
+
 .error {
-  margin: 10px;
+  margin: 0;
+  padding: 10px;
+  background: #202020;
+  font-size: 12px;
+  height: 36px;
 }

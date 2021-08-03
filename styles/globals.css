@@ -30,3 +30,16 @@ a.url:hover {
   color: #3f51b5;
   text-decoration: underline;
 }
+
+.redtext {
+  color: red;
+}
+
+.greentext {
+  color: green;
+}
+
+.monospace {
+  font-family:
+    Monaco, Menlo, "Ubuntu Mono", Consolas, source-code-pro, monospace;
+}
