@@ -24,6 +24,12 @@ export default function Header() {
         <a className="url">Games</a>
       </Link>
       {
+        firebase.auth().currentUser &&
+        <Link href="/create">
+          <a className="url">Create</a>
+        </Link>
+      }
+      {
         firebase.auth().currentUser ?
         <Tooltip title="Sign Out" arrow>
           <IconButton
