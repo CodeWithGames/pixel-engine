@@ -1,3 +1,7 @@
+import PaletteIcon from '@material-ui/icons/Palette';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import { useEffect, useState } from 'react';
 import { palettes } from '../data/palettes.js';
 
@@ -185,27 +189,8 @@ export default function Maps(props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.tabs}>
-        <div
-          onClick={() => setTab(0)}
-          className={tab === 0 ? styles.currtab : ''}
-        >
-          Colors
-        </div>
-        <div
-          onClick={() => setTab(1)}
-          className={tab === 1 ? styles.currtab : ''}
-        >
-          Tiles
-        </div>
-        <div
-          onClick={() => setTab(2)}
-          className={tab === 2 ? styles.currtab : ''}
-        >
-          Maps
-        </div>
-      </div>
-      <div style={ tab === 0 ? {} : { display: 'none' }}>
+      <div>
+        <h1>Colors</h1>
         <div className={styles.tilegrid}>
           {
             colors.map((color, i) =>
@@ -223,17 +208,21 @@ export default function Maps(props) {
             )
           }
         </div>
-        <input
-          type="color"
-          value={colors[currColor]}
-          className={styles.colorinput}
-          onChange={e => {
-            const newColors = colors.slice();
-            newColors.splice(currColor, 1, e.target.value);
-            setColors(newColors);
-          }}
-        />
-        <select
+        <div>
+          <input
+            type="color"
+            value={colors[currColor]}
+            className={styles.colorinput}
+            onChange={e => {
+              const newColors = colors.slice();
+              newColors.splice(currColor, 1, e.target.value);
+              setColors(newColors);
+            }}
+          />
+        </div>
+        <Select
+          className={styles.paletteinput}
+          id="palette-select"
           value={palette}
           onChange={e => {
             const val = e.target.value;
@@ -243,12 +232,13 @@ export default function Maps(props) {
         >
           {
             palettes.map((pal, i) =>
-              <option value={i} key={i}>{pal.name}</option>
+              <MenuItem value={i} key={i}>{pal.name}</MenuItem>
             )
           }
-        </select>
+        </Select>
       </div>
-      <div style={ tab === 1 ? {} : { display: 'none' }}>
+      <div>
+        <h1>Tiles</h1>
         <div className={styles.tilegrid}>
           {
             tiles.map((tile, i) =>
@@ -288,7 +278,8 @@ export default function Maps(props) {
           />
         </div>
       </div>
-      <div style={ tab === 2 ? {} : { display: 'none' }}>
+      <div>
+        <h1>Maps</h1>
         <div className={styles.tilegrid}>
           {
             maps.map((map, i) =>

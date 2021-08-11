@@ -1,26 +1,10 @@
 .container {
-  min-width: 296px;
+  display: flex;
   text-align: center;
-  background: #efefef;
 }
 
-.tabs {
-  display: flex;
-  background: #fff;
-}
-
-.tabs > div {
-  cursor: pointer;
-  background: #fff;
-  height: 40px;
-  width: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.currtab {
-  background: #efefef!important;
+.container > div {
+  margin: 0 20px;
 }
 
 .colorinput {
@@ -46,6 +30,11 @@
 
 .options > label {
   cursor: pointer;
+}
+
+.paletteinput {
+  font-family: 'Lato', sans-serif!important;
+  margin-top: 10px;
 }
 
 .selected {
