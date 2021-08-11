@@ -14,13 +14,6 @@
   flex-grow: 1;
 }
 
-.tokencount {
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 10px;
-}
-
 .compilebutton {
   position: absolute!important;
   margin: 10px!important;

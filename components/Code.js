@@ -26,11 +26,8 @@ function draw() {
 }
 `;
 
-const maxTokens = 4096;
-
 export default function Code(props) {
   const [code, setCode] = useState(defaultCode);
-  const [tokens, setTokens] = useState(-1);
   const [error, setError] = useState('');
 
   // compiles code
@@ -41,24 +38,12 @@ export default function Code(props) {
       Parser.parse(code);
     } catch (e) {
       setError(e);
-      setTokens(-1);
       return;
     }
-    // count tokens
-    let tokens = 0;
-    try {
-      for (const token of Parser.tokenizer(code)) tokens++;
-    } catch(e) {
-      setError(e);
-      setTokens(-1);
-      return;
-    }
-    setTokens(tokens);
   }
 
   // update props
   useEffect(() => {
-    setTokens(-1);
     props.setCode(code);
   }, [code])
 
@@ -71,17 +56,10 @@ export default function Code(props) {
           mode="javascript"
           theme="monokai"
           wrapEnabled={true}
-          height="auto"
           showPrintMargin={false}
           setOptions={{ useWorker: false }}
           tabSize={2}
         />
-        <p className={`
-          ${styles.tokencount}
-          ${(tokens >= 0 && tokens <= maxTokens) ? 'greentext' : 'redtext'}
-        `}>
-          {tokens === -1 ? '?' : tokens} token{tokens !== 1 && 's'}
-        </p>
         <Button
           variant="contained"
           color="primary"
