@@ -8,14 +8,23 @@
   width: 100%;
 }
 
-.logolink {
-  margin: 0 10px;
+.container > div {
+  margin: 0 10px!important;
 }
 
 .flexfill {
   flex-grow: 1;
 }
 
-.iconbutton {
-  margin: 0 10px!important;
+.container > a {
+  margin-right: 20px;
+}
+
+.container > a > svg {
+  width: 32px;
+  height: 32px;
+}
+
+.container > a:hover {
+  color: #2196f3;
 }
