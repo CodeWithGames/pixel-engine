@@ -1,0 +1,9 @@
+.container {
+  background: #ddd;
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.container > h1 {
+  margin-top: 0;
+}
