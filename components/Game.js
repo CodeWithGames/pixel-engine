@@ -24,7 +24,7 @@ const emptySrc =
 `;
 
 export default function Game(props) {
-  const { tileSize, mapSize } = props;
+  const { tileSize, mapSize, playing, setPlaying } = props;
   const mapGridPixels = Math.floor(canvasPixels / mapSize);
   const tileGridPixels = Math.floor(mapGridPixels / tileSize);
 
@@ -160,7 +160,6 @@ export default function Game(props) {
 </html>
 `;
 
-  const [playing, setPlaying] = useState(false);
   const [source, setSource] = useState(emptySrc);
 
   // sets source doc

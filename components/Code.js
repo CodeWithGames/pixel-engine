@@ -27,6 +27,8 @@ function draw() {
 `;
 
 export default function Code(props) {
+  const { playing } = props;
+
   const [code, setCode] = useState(defaultCode);
   const [error, setError] = useState('');
 
@@ -45,7 +47,12 @@ export default function Code(props) {
   // update props
   useEffect(() => {
     props.setCode(code);
-  }, [code])
+  }, [code]);
+
+  // compile on play
+  useEffect(() => {
+    if (playing) compile();
+  }, [playing]);
 
   return (
     <div className={styles.container}>

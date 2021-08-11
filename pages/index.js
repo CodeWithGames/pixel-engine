@@ -19,9 +19,14 @@ export default function Index() {
 
   const [code, setCode] = useState(undefined);
 
+  const [playing, setPlaying] = useState(false);
+
   return (
     <div className={styles.container}>
-      <Code setCode={setCode} />
+      <Code
+        setCode={setCode}
+        playing={playing}
+      />
       <Maps
         setColors={setColors}
         setTiles={setTiles}
@@ -36,6 +41,7 @@ export default function Index() {
         maps={maps}
         tileSize={tileSize}
         mapSize={mapSize}
+        playing={playing} setPlaying={setPlaying}
       />
     </div>
   );
