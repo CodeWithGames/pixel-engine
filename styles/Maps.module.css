@@ -1,24 +1,55 @@
 .container {
-  display: flex;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
-.container > div {
-  margin: 0 20px;
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.middle {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.coloroptions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .colorinput {
+  margin-top: 8px;
   cursor: pointer;
   width: 32px;
   height: 32px;
 }
 
-.tilegrid {
+.grid {
   display: flex;
   flex-wrap: wrap;
-  width: 128px;
-  margin: 20px auto;
   outline: 4px solid #000;
+  margin: 4px;
+}
+
+.colorgrid {
+  width: 128px;
+  height: 128px;
+}
+
+.mapgrid {
+  width: 512px;
+}
+
+.tilegrid {
+  width: 512px;
 }
 
 .tile {
@@ -28,13 +59,17 @@
   cursor: pointer;
 }
 
-.options > label {
+.options > label, .options > input {
   cursor: pointer;
 }
 
 .paletteinput {
   font-family: 'Lato', sans-serif!important;
-  margin-top: 10px;
+  margin: 10px 0;
+}
+
+.map {
+  margin: 20px;
 }
 
 .selected {
