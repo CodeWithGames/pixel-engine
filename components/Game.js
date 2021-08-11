@@ -185,26 +185,28 @@ export default function Game(props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.toolbar}>
-        <Button
-          variant="contained"
-          onClick={playing ? stopPlaying : startPlaying}
-        >
-          {playing ? <StopIcon /> : <PlayArrowIcon />}
-        </Button>
-        <Button variant="contained" onClick={downloadGame}>
-          <GetAppIcon />
-        </Button>
+      <div>
+        <div className={styles.toolbar}>
+          <Button
+            variant="contained"
+            onClick={playing ? stopPlaying : startPlaying}
+          >
+            {playing ? <StopIcon /> : <PlayArrowIcon />}
+          </Button>
+          <Button variant="contained" onClick={downloadGame}>
+            <GetAppIcon />
+          </Button>
+        </div>
+        <iframe
+          title="game"
+          className={styles.frame}
+          sandbox="allow-scripts"
+          srcDoc={source}
+          width={canvasPixels}
+          height={canvasPixels}
+          frameBorder="0"
+        />
       </div>
-      <iframe
-        title="game"
-        className={styles.frame}
-        sandbox="allow-scripts"
-        srcDoc={source}
-        width={canvasPixels}
-        height={canvasPixels}
-        frameBorder="0"
-      />
     </div>
   );
 }
