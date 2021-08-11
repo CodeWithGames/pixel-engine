@@ -1,5 +1,6 @@
-import Game from '../components/Game.js';
 import Maps from '../components/Maps.js';
+import Game from '../components/Game.js';
+import Docs from '../components/Docs.js';
 
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -34,15 +35,18 @@ export default function Index() {
         tileSize={tileSize}
         mapSize={mapSize}
       />
-      <Game
-        code={code}
-        colors={colors}
-        tiles={tiles}
-        maps={maps}
-        tileSize={tileSize}
-        mapSize={mapSize}
-        playing={playing} setPlaying={setPlaying}
-      />
+      <div className={styles.sidebar}>
+        <Game
+          code={code}
+          colors={colors}
+          tiles={tiles}
+          maps={maps}
+          tileSize={tileSize}
+          mapSize={mapSize}
+          playing={playing} setPlaying={setPlaying}
+        />
+        <Docs />
+      </div>
     </div>
   );
 }
