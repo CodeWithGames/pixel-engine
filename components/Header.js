@@ -5,9 +5,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import firebase from 'firebase/app';
-import signInWithGoogle from '../util/signInWithGoogle.js';
-
 import styles from '../styles/Header.module.css';
 
 export default function Header() {
