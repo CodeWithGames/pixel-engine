@@ -41,6 +41,8 @@ export default function Maps(props) {
 
   const [palette, setPalette] = useState(0);
 
+  const [tab, setTab] = useState(0);
+
   // draws current tile
   function drawTile() {
     // clear canvas
@@ -178,8 +180,27 @@ export default function Maps(props) {
 
   return (
     <div className={styles.container}>
-      <div>
-        <h1>Colors</h1>
+      <div className={styles.tabs}>
+        <div
+          onClick={() => setTab(0)}
+          className={tab === 0 ? styles.currtab : ''}
+        >
+          Colors
+        </div>
+        <div
+          onClick={() => setTab(1)}
+          className={tab === 1 ? styles.currtab : ''}
+        >
+          Tiles
+        </div>
+        <div
+          onClick={() => setTab(2)}
+          className={tab === 2 ? styles.currtab : ''}
+        >
+          Maps
+        </div>
+      </div>
+      <div style={ tab === 0 ? {} : { display: 'none' }}>
         <div className={styles.tilegrid}>
           {
             colors.map((color, i) =>
@@ -222,8 +243,7 @@ export default function Maps(props) {
           }
         </select>
       </div>
-      <div>
-        <h1>Tiles</h1>
+      <div style={ tab === 1 ? {} : { display: 'none' }}>
         <div className={styles.tilegrid}>
           {
             tiles.map((tile, i) =>
@@ -263,8 +283,7 @@ export default function Maps(props) {
           />
         </div>
       </div>
-      <div>
-        <h1>Maps</h1>
+      <div style={ tab === 2 ? {} : { display: 'none' }}>
         <div className={styles.tilegrid}>
           {
             maps.map((map, i) =>
