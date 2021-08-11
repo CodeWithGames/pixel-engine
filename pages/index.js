@@ -1,30 +1,42 @@
-import Button from '@material-ui/core/Button';
-import Image from 'next/image';
+import Game from '../components/Game.js';
+import Maps from '../components/Maps.js';
 
-import firebase from 'firebase/app';
-import signInWithGoogle from '../util/signInWithGoogle.js';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
 import styles from '../styles/Index.module.css';
 
+const Code = dynamic(import('../components/Code.js'), { ssr: false });
+
+// units
+const tileSize = 8;
+const mapSize = 16;
+
 export default function Index() {
+  const [colors, setColors] = useState(undefined);
+  const [tiles, setTiles] = useState(undefined);
+  const [maps, setMaps] = useState(undefined);
+
+  const [code, setCode] = useState(undefined);
+
   return (
     <div className={styles.container}>
-      <div className={styles.centerbox}>
-        <h1>
-          <Image src="/logo.png" width="48" height="48" />
-          Pixel Engine
-        </h1>
-        {
-          !firebase.auth().currentUser &&
-          <Button
-            onClick={signInWithGoogle}
-            variant="contained"
-            color="primary"
-          >
-            Sign in with Google
-          </Button>
-        }
-      </div>
+      <Code setCode={setCode} />
+      <Maps
+        setColors={setColors}
+        setTiles={setTiles}
+        setMaps={setMaps}
+        tileSize={tileSize}
+        mapSize={mapSize}
+      />
+      <Game
+        code={code}
+        colors={colors}
+        tiles={tiles}
+        maps={maps}
+        tileSize={tileSize}
+        mapSize={mapSize}
+      />
     </div>
   );
 }
