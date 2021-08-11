@@ -2,6 +2,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import PersonIcon from '@material-ui/icons/Person';
+import PaletteIcon from '@material-ui/icons/Palette';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -29,6 +30,15 @@ export default function Header() {
           rel="noopener noreferrer"
         >
           <PersonIcon />
+        </a>
+      </Tooltip>
+      <Tooltip title="Palettes" arrow>
+        <a
+          href="https://lospec.com/palette-list"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <PaletteIcon />
         </a>
       </Tooltip>
     </div>

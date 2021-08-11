@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
+import StopIcon from '@material-ui/icons/Stop';
 import GetAppIcon from '@material-ui/icons/GetApp';
 
 import { useState } from 'react';
@@ -190,7 +190,7 @@ export default function Game(props) {
           variant="contained"
           onClick={playing ? stopPlaying : startPlaying}
         >
-          {playing ? <PauseIcon /> : <PlayArrowIcon />}
+          {playing ? <StopIcon /> : <PlayArrowIcon />}
         </Button>
         <Button variant="contained" onClick={downloadGame}>
           <GetAppIcon />

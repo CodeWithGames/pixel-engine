@@ -1,6 +1,3 @@
-import EditIcon from '@material-ui/icons/Edit';
-import Checkbox from '@material-ui/core/Checkbox';
-
 import { useEffect, useState } from 'react';
 import { palettes } from '../data/palettes.js';
 
@@ -120,6 +117,10 @@ export default function Maps(props) {
     // get x and y on canvas
     const currX = e.clientX - tileCanvas.offsetLeft + window.scrollX;
     const currY = e.clientY - tileCanvas.offsetTop + window.scrollY;
+    // return if out of bounds
+    if (
+      currX < 0 || currX >= tilePixels || currY < 0 || currY >= tilePixels
+    ) return;
     // get x and y in tile units
     const tileX = Math.floor(currX / tileGridPixels);
     const tileY = Math.floor(currY / tileGridPixels);
@@ -140,6 +141,10 @@ export default function Maps(props) {
     // get x and y on canvas
     const currX = e.clientX - mapCanvas.offsetLeft + window.scrollX;
     const currY = e.clientY - mapCanvas.offsetTop + window.scrollY;
+    // return if out of bounds
+    if (
+      currX < 0 || currX >= mapPixels || currY < 0 || currY >= mapPixels
+    ) return;
     // get x and y in map units
     const tileX = Math.floor(currX / mapGridPixels);
     const tileY = Math.floor(currY / mapGridPixels);
@@ -275,9 +280,9 @@ export default function Maps(props) {
         />
         <div className={styles.options}>
           <label htmlFor="input-tilegridded">Grid</label>
-          <Checkbox
+          <input
             id="input-tilegridded"
-            color="default"
+            type="checkbox"
             checked={tileGridded}
             onChange={e => setTileGridded(e.target.checked)}
           />
@@ -315,9 +320,9 @@ export default function Maps(props) {
         />
         <div className={styles.options}>
           <label htmlFor="input-mapgridded">Grid</label>
-          <Checkbox
+          <input
             id="input-mapgridded"
-            color="default"
+            type="checkbox"
             checked={mapGridded}
             onChange={e => setMapGridded(e.target.checked)}
           />
