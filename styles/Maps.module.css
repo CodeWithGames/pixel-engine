@@ -1,11 +1,26 @@
 .container {
+  min-width: 296px;
   text-align: center;
-  display: flex;
-  margin: 0 20px;
+  background: #efefef;
 }
 
-.container > div {
-  margin: 0 20px;
+.tabs {
+  display: flex;
+  background: #fff;
+}
+
+.tabs > div {
+  cursor: pointer;
+  background: #fff;
+  height: 40px;
+  width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currtab {
+  background: #efefef!important;
 }
 
 .colorinput {

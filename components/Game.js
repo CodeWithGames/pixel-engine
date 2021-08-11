@@ -185,7 +185,6 @@ export default function Game(props) {
 
   return (
     <div className={styles.container}>
-      <h1>Game</h1>
       <div className={styles.toolbar}>
         <Button
           variant="contained"
