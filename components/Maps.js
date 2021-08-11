@@ -12,7 +12,7 @@ const gridColor = '#dddddd';
 let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
 
-const tileCount = 16;
+const tileCount = 64;
 const mapCount = 16;
 
 const tilePixels = 128;
@@ -189,9 +189,37 @@ export default function Maps(props) {
 
   return (
     <div className={styles.container}>
-      <div>
-        <h1>Colors</h1>
-        <div className={styles.tilegrid}>
+      <div className={styles.top}>
+        <div className={styles.coloroptions}>
+          <PaletteIcon />
+          <Select
+            className={styles.paletteinput}
+            id="palette-select"
+            value={palette}
+            onChange={e => {
+              const val = e.target.value;
+              setPalette(val);
+              setColors(palettes[val].colors);
+            }}
+          >
+            {
+              palettes.map((pal, i) =>
+                <MenuItem value={i} key={i}>{pal.name}</MenuItem>
+              )
+            }
+          </Select>
+          <input
+            type="color"
+            value={colors[currColor]}
+            className={styles.colorinput}
+            onChange={e => {
+              const newColors = colors.slice();
+              newColors.splice(currColor, 1, e.target.value);
+              setColors(newColors);
+            }}
+          />
+        </div>
+        <div className={`${styles.grid} ${styles.colorgrid}`}>
           {
             colors.map((color, i) =>
               <div
@@ -209,78 +237,31 @@ export default function Maps(props) {
           }
         </div>
         <div>
-          <input
-            type="color"
-            value={colors[currColor]}
-            className={styles.colorinput}
-            onChange={e => {
-              const newColors = colors.slice();
-              newColors.splice(currColor, 1, e.target.value);
-              setColors(newColors);
-            }}
+          <canvas
+            id="canvas-tile"
+            className={
+              tileGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
+            }
+            width={tilePixels}
+            height={tilePixels}
+            onMouseDown={e => { sketchingTile = true; sketchTile(e); }}
+            onMouseMove={e => { if (sketchingTile) sketchTile(e); }}
+            onMouseUp={e => { sketchingTile = false; }}
+            onMouseLeave={e => { sketchingTile = false; }}
           />
-        </div>
-        <Select
-          className={styles.paletteinput}
-          id="palette-select"
-          value={palette}
-          onChange={e => {
-            const val = e.target.value;
-            setPalette(val);
-            setColors(palettes[val].colors);
-          }}
-        >
-          {
-            palettes.map((pal, i) =>
-              <MenuItem value={i} key={i}>{pal.name}</MenuItem>
-            )
-          }
-        </Select>
-      </div>
-      <div>
-        <h1>Tiles</h1>
-        <div className={styles.tilegrid}>
-          {
-            tiles.map((tile, i) =>
-              <div
-                onClick={() => setCurrTile(i)}
-                className={
-                  currTile === i ?
-                  `${styles.tile} ${styles.selected}` :
-                  styles.tile
-                }
-                key={`${i}`}
-                style={{ background: colors[tiles[i][0]] }}
-              >
-              </div>
-            )
-          }
-        </div>
-        <canvas
-          id="canvas-tile"
-          className={
-            tileGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
-          }
-          width={tilePixels}
-          height={tilePixels}
-          onMouseDown={e => { sketchingTile = true; sketchTile(e); }}
-          onMouseMove={e => { if (sketchingTile) sketchTile(e); }}
-          onMouseUp={e => { sketchingTile = false; }}
-          onMouseLeave={e => { sketchingTile = false; }}
-        />
-        <div className={styles.options}>
-          <label htmlFor="input-tilegridded">Grid</label>
-          <input
-            id="input-tilegridded"
-            type="checkbox"
-            checked={tileGridded}
-            onChange={e => setTileGridded(e.target.checked)}
-          />
+          <div className={styles.options}>
+            <label htmlFor="input-tilegridded">Grid</label>
+            <input
+              id="input-tilegridded"
+              type="checkbox"
+              checked={tileGridded}
+              onChange={e => setTileGridded(e.target.checked)}
+            />
+          </div>
         </div>
       </div>
-      <div>
-        <h1>Maps</h1>
-        <div className={styles.tilegrid}>
+      <div className={styles.middle}>
+        <div className={`${styles.grid} ${styles.mapgrid}`}>
           {
             maps.map((map, i) =>
               <div
@@ -297,6 +278,7 @@ export default function Maps(props) {
             )
           }
         </div>
+        <div className={styles.map}>
         <canvas
           id="canvas-map"
           className={
@@ -318,6 +300,24 @@ export default function Maps(props) {
             onChange={e => setMapGridded(e.target.checked)}
           />
         </div>
+        </div>
+      </div>
+      <div className={`${styles.grid} ${styles.tilegrid}`}>
+        {
+          tiles.map((tile, i) =>
+            <div
+              onClick={() => setCurrTile(i)}
+              className={
+                currTile === i ?
+                `${styles.tile} ${styles.selected}` :
+                styles.tile
+              }
+              key={`${i}`}
+              style={{ background: colors[tiles[i][0]] }}
+            >
+            </div>
+          )
+        }
       </div>
     </div>
   );
