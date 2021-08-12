@@ -19,19 +19,36 @@ const mapCount = 16;
 const defaultTiles = Array(tileCount).fill(Array(tileSize ** 2).fill(0));
 const defaultMaps = Array(mapCount).fill(Array(mapSize ** 2).fill(0));
 
+const defaultCode =
+`// runs once on start
+function start() {
+
+}
+
+// runs once a frame
+function update(delta) {
+
+}
+
+// runs once a frame after update
+function draw() {
+
+}
+`;
+
 export default function Index() {
   const [colors, setColors] = useState(palettes[0].colors);
   const [tiles, setTiles] = useState(defaultTiles);
   const [maps, setMaps] = useState(defaultMaps);
 
-  const [code, setCode] = useState(undefined);
+  const [code, setCode] = useState(defaultCode);
 
   const [playing, setPlaying] = useState(false);
 
   return (
     <div className={styles.container}>
       <Code
-        setCode={setCode}
+        code={code} setCode={setCode}
         playing={playing}
       />
       <Maps

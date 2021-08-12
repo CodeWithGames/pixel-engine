@@ -11,27 +11,9 @@ import 'ace-builds/src-noconflict/mode-javascript.js';
 import 'ace-builds/src-noconflict/theme-monokai.js';
 import styles from '../styles/Code.module.css';
 
-const defaultCode =
-`// runs once on start
-function start() {
-
-}
-
-// runs once a frame
-function update(delta) {
-
-}
-
-// runs once a frame after update
-function draw() {
-
-}
-`;
-
 export default function Code(props) {
-  const { playing } = props;
+  const { code, setCode, playing } = props;
 
-  const [code, setCode] = useState(defaultCode);
   const [message, setMessage] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
@@ -50,7 +32,7 @@ export default function Code(props) {
 
   // update props
   useEffect(() => {
-    props.setCode(code);
+    setCode(code);
   }, [code]);
 
   // compile on play
