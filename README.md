@@ -6,9 +6,11 @@ A minimalist online game engine.
 
 `clear()`: clears canvas
 
-`fill(color)`: draws rect of color `color` over full canvas
+`fill(color)`: draws `color` rect over full canvas
 
-`rect(x, y, w, h, color)`: draws rect of width `w`, height `h`, and color `color` at `x`, `y`
+`rect(x, y, width, height, color)`: draws `color` rect of `width`, `height` size at `x`, `y`
+
+`objRect(obj)`: calls `rect` with `x`, `y`, `width`, `height`, and `color` destructured from `obj`
 
 ## Game Loop
 
@@ -18,23 +20,29 @@ A minimalist online game engine.
 
 `draw()`: runs once a frame after `update`
 
-## Keyboard Input
+## Input
 
-`isKeyDown(key)`: returns whether given character `key` is pressed
+`isKeyDown(key)`: returns whether given `key` is pressed
 
-`isKey(key)`: returns whether given character `key` was pressed in the last frame
+`isKey(key)`: returns whether given `key` was pressed in the last frame
 
 ## Maps
 
-`loadMap(index)`: loads map of index `index` to canvas
+`loadMap(index)`: loads map `index` to canvas
 
-`loadTile(x, y, index)`: loads tile of index `index` at `x`, `y`
+`loadTile(index, x, y)`: loads tile `index` at `x`, `y`
 
 ## Example
 
 ```js
 // define player
-const player = { x: 0, y: 0, w: 16, h: 16 };
+const player = {
+  x: 0,
+  y: 0,
+  width: 16,
+  height: 16,
+  color: 'blue'
+};
 const speed = 0.1;
 
 // runs once on start
@@ -44,15 +52,15 @@ function start() {
 
 // runs once a frame
 function update(delta) {
-  if (isKeyDown("W")) player.y -= speed * delta;
-  if (isKeyDown("A")) player.x -= speed * delta;
-  if (isKeyDown("S")) player.y += speed * delta;
-  if (isKeyDown("D")) player.x += speed * delta;
+  if (isKeyDown('w')) player.y -= speed * delta;
+  if (isKeyDown('a')) player.x -= speed * delta;
+  if (isKeyDown('s')) player.y += speed * delta;
+  if (isKeyDown('d')) player.x += speed * delta;
 }
 
 // runs once a frame after update
 function draw() {
   fill('green');
-  rect(player.x, player.y, player.w, player.h, 'blue');
+  objRect(player);
 }
 ```
