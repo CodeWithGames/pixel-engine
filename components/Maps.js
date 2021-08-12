@@ -26,6 +26,9 @@ const selectWidth = tileCols * gridPixels;
 const selectHeight = tileRows * gridPixels;
 const selectFullWidth = selectBorder * 2 + selectWidth;
 const selectFullHeight = selectBorder * 2 + selectHeight;
+
+// map units
+const mapCount = 16;
 const mapPixels = 256;
 
 let sketchingTile = false;
@@ -207,6 +210,31 @@ export default function Maps(props) {
         }
       }
     }
+    // get outline coordinates
+    const xo = currTile % tileCols;
+    const yo = Math.floor(currTile / tileCols);
+    // draw outer outline
+    selectCtx.fillStyle = '#fff';
+    const outLeft = xo * gridPixels;
+    const outRight = outLeft + gridPixels + selectBorder;
+    const outTop = yo * gridPixels;
+    const outBottom = outTop + gridPixels + selectBorder;
+    const outLength = selectBorder * 2 + gridPixels;
+    selectCtx.fillRect(outLeft, outTop, outLength, selectBorder);
+    selectCtx.fillRect(outLeft, outTop, selectBorder, outLength);
+    selectCtx.fillRect(outLeft, outBottom, outLength, selectBorder);
+    selectCtx.fillRect(outRight, outTop, selectBorder, outLength);
+    // draw inner outline
+    selectCtx.fillStyle = '#000';
+    const inLeft = outLeft + selectBorder;
+    const inRight = outLeft + gridPixels;
+    const inTop = outTop + selectBorder;
+    const inBottom = outTop + gridPixels;
+    const inLength = gridPixels;
+    selectCtx.fillRect(inLeft, inTop, inLength, selectBorder);
+    selectCtx.fillRect(inLeft, inTop, selectBorder, inLength);
+    selectCtx.fillRect(inLeft, inBottom, inLength, selectBorder);
+    selectCtx.fillRect(inRight, inTop, selectBorder, inLength);
   }
 
   // selects sprite with given mouse event data
