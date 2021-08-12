@@ -1,7 +1,3 @@
-import AceEditor from 'react-ace';
-
-import 'ace-builds/src-noconflict/mode-javascript.js';
-import 'ace-builds/src-noconflict/theme-monokai.js';
 import styles from '../styles/Docs.module.css';
 
 const example =
@@ -54,23 +50,9 @@ export default function Docs() {
       <p><code>loadMap(index)</code>: loads map of index <code>index</code> to canvas</p>
       <p><code>loadTile(x, y, index)</code>: loads tile of index <code>index</code> at <code>x</code>, <code>y</code></p>
       <h2>Example</h2>
-      <div className={styles.editor}>
-        <AceEditor
-          readOnly={true}
-          value={example}
-          mode="javascript"
-          theme="monokai"
-          wrapEnabled={true}
-          showPrintMargin={false}
-          showGutter={false}
-          focus={false}
-          highlightActiveLine={false}
-          width="auto"
-          setOptions={{ useWorker: false }}
-          tabSize={2}
-          maxLines={28}
-        />
-      </div>
+      <pre>
+        <code>{example}</code>
+      </pre>
     </div>
   );
 }

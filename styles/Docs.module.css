@@ -9,8 +9,7 @@
   margin-top: 0;
 }
 
-.editor {
-  background: #272822;
-  padding: 10px;
-  border-radius: 10px;
+.container > pre {
+  margin-bottom: 0;
+  white-space: pre-wrap;
 }
