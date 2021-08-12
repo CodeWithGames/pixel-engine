@@ -11,11 +11,20 @@ const gridColor = '#dddddd';
 
 let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
+let selectCanvas, selectCtx;
 
 const tileCount = 64;
 const mapCount = 16;
 
 const tilePixels = 128;
+
+// select units
+const selectBorder = 4;
+const gridPixels = 32;
+const selectWidth = tileCols * gridPixels;
+const selectHeight = tileRows * gridPixels;
+const selectFullWidth = selectBorder * 2 + selectWidth;
+const selectFullHeight = selectBorder * 2 + selectHeight;
 const mapPixels = 256;
 
 let sketchingTile = false;
@@ -170,6 +179,8 @@ export default function Maps(props) {
     tileCtx = tileCanvas.getContext('2d');
     mapCanvas = document.getElementById('canvas-map');
     mapCtx = mapCanvas.getContext('2d');
+    selectCanvas = document.getElementById('canvas-select');
+    selectCtx = selectCanvas.getContext('2d');
   }, []);
 
   // draw tile when colors or tiles change
@@ -302,23 +313,13 @@ export default function Maps(props) {
         </div>
         </div>
       </div>
-      <div className={`${styles.grid} ${styles.tilegrid}`}>
-        {
-          tiles.map((tile, i) =>
-            <div
-              onClick={() => setCurrTile(i)}
-              className={
-                currTile === i ?
-                `${styles.tile} ${styles.selected}` :
-                styles.tile
-              }
-              key={`${i}`}
-              style={{ background: colors[tiles[i][0]] }}
-            >
-            </div>
-          )
-        }
-      </div>
+      <canvas
+          id="canvas-select"
+          width={selectFullWidth}
+          height={selectFullHeight}
+          className={styles.selectcanvas}
+          onMouseDown={select}
+        />
     </div>
   );
 }

@@ -48,10 +48,6 @@
   width: 512px;
 }
 
-.tilegrid {
-  width: 512px;
-}
-
 .tile {
   width: 32px;
   height: 32px;
@@ -85,4 +81,8 @@
 
 .gridded {
   outline: 1px solid #ddd;
+}
+
+.selectcanvas {
+  cursor: pointer;
 }
