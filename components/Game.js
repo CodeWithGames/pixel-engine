@@ -23,7 +23,10 @@ const emptySrc =
 `;
 
 export default function Game(props) {
-  const { tileSize, mapSize, playing, setPlaying } = props;
+  const {
+    colors, tiles, maps, code,
+    tileSize, mapSize, playing, setPlaying
+  } = props;
   const tilePixels = Math.floor(canvasPixels / mapSize);
   const pixelPixels = Math.floor(tilePixels / tileSize);
 
@@ -82,9 +85,9 @@ export default function Game(props) {
       return _pressedKeys[keyCode] && !_lastPressedKeys[keyCode];
     }
     // map functions
-    const _colors = ${JSON.stringify(props.colors)};
-    const _tiles = ${JSON.stringify(props.tiles)};
-    const _maps = ${JSON.stringify(props.maps)};
+    const _colors = ${JSON.stringify(colors)};
+    const _tiles = ${JSON.stringify(tiles)};
+    const _maps = ${JSON.stringify(maps)};
     const _mapSize = ${mapSize};
     const _tileSize = ${tileSize};
     const _tilePixels = ${tilePixels};
@@ -154,7 +157,7 @@ export default function Game(props) {
       // start game loop
       requestAnimationFrame(gameLoop);
     }
-    ${props.code}
+    ${code}
   </script>
 </html>
 `;

@@ -14,41 +14,41 @@ let mapCanvas, mapCtx;
 let selectCanvas, selectCtx;
 
 // tile units
-const tileCount = 64;
-const tileRows = 4;
-const tileCols = Math.floor(tileCount / tileRows);
 const tilePixels = 128;
 
 // select units
 const selectBorder = 4;
 const gridPixels = 32;
-const selectWidth = tileCols * gridPixels;
-const selectHeight = tileRows * gridPixels;
-const selectFullWidth = selectBorder * 2 + selectWidth;
-const selectFullHeight = selectBorder * 2 + selectHeight;
 
 // map units
-const mapCount = 16;
 const mapPixels = 256;
 
 let sketchingTile = false;
 let sketchingMap = false;
 
 export default function Maps(props) {
-  const { tileSize, mapSize } = props;
+  const {
+    colors, setColors,
+    tiles, setTiles,
+    maps, setMaps,
+    tileSize, tileCount,
+    mapSize, mapCount
+  } = props;
+
+  const tileRows = 4;
+  const tileCols = Math.floor(tileCount / tileRows);
+  const selectWidth = tileCols * gridPixels;
+  const selectHeight = tileRows * gridPixels;
+  const selectFullWidth = selectBorder * 2 + selectWidth;
+  const selectFullHeight = selectBorder * 2 + selectHeight;
+
   const tileGridPixels = Math.floor(tilePixels / tileSize);
   const mapGridPixels = Math.floor(mapPixels / mapSize);
   const pixelPixels = Math.floor(mapGridPixels / tileSize);
   const gridPixelPixels = Math.floor(gridPixels / tileSize);
 
-  const defaultTiles = Array(tileCount).fill(Array(tileSize ** 2).fill(0));
-  const defaultMaps = Array(mapCount).fill(Array(mapSize ** 2).fill(0));
-
-  const [colors, setColors] = useState(palettes[0].colors);
   const [currColor, setCurrColor] = useState(0);
-  const [tiles, setTiles] = useState(defaultTiles);
   const [currTile, setCurrTile] = useState(0);
-  const [maps, setMaps] = useState(defaultMaps);
   const [currMap, setCurrMap] = useState(0);
 
   const [tileGridded, setTileGridded] = useState(true);
@@ -274,11 +274,6 @@ export default function Maps(props) {
   useEffect(() => {
     drawMap();
   }, [colors, tiles, maps, currMap, mapGridded]);
-
-  // update props
-  useEffect(() => props.setColors(colors), [colors]);
-  useEffect(() => props.setTiles(tiles), [tiles]);
-  useEffect(() => props.setMaps(maps), [maps]);
 
   return (
     <div className={styles.container}>

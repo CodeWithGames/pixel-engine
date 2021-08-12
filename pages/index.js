@@ -4,6 +4,7 @@ import Docs from '../components/Docs.js';
 
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { palettes } from '../data/palettes.js';
 
 import styles from '../styles/Index.module.css';
 
@@ -12,11 +13,16 @@ const Code = dynamic(import('../components/Code.js'), { ssr: false });
 // units
 const tileSize = 8;
 const mapSize = 16;
+const tileCount = 64;
+const mapCount = 16;
+
+const defaultTiles = Array(tileCount).fill(Array(tileSize ** 2).fill(0));
+const defaultMaps = Array(mapCount).fill(Array(mapSize ** 2).fill(0));
 
 export default function Index() {
-  const [colors, setColors] = useState(undefined);
-  const [tiles, setTiles] = useState(undefined);
-  const [maps, setMaps] = useState(undefined);
+  const [colors, setColors] = useState(palettes[0].colors);
+  const [tiles, setTiles] = useState(defaultTiles);
+  const [maps, setMaps] = useState(defaultMaps);
 
   const [code, setCode] = useState(undefined);
 
@@ -29,18 +35,18 @@ export default function Index() {
         playing={playing}
       />
       <Maps
-        setColors={setColors}
-        setTiles={setTiles}
-        setMaps={setMaps}
-        tileSize={tileSize}
-        mapSize={mapSize}
+        colors={colors} setColors={setColors}
+        tiles={tiles} setTiles={setTiles}
+        maps={maps} setMaps={setMaps}
+        tileSize={tileSize} tileCount={tileCount}
+        mapSize={mapSize} mapCount={mapCount}
       />
       <div className={styles.sidebar}>
         <Game
-          code={code}
           colors={colors}
           tiles={tiles}
           maps={maps}
+          code={code}
           tileSize={tileSize}
           mapSize={mapSize}
           playing={playing} setPlaying={setPlaying}
