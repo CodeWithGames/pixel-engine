@@ -1,5 +1,7 @@
 import Button from '@material-ui/core/Button';
 import DescriptionIcon from '@material-ui/icons/Description';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
 import AceEditor from 'react-ace';
 import { Parser } from 'acorn';
 
@@ -30,18 +32,20 @@ export default function Code(props) {
   const { playing } = props;
 
   const [code, setCode] = useState(defaultCode);
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   // compiles code
   function compile() {
-    setError('');
+    setSnackbarOpen(false);
     // parse to check for errors
     try {
       Parser.parse(code);
+      setMessage({ type: 'success', text: 'Compiled successfully' });
     } catch (e) {
-      setError(e);
-      return;
+      setMessage({ type: 'error', text: e.toString() });
     }
+    setSnackbarOpen(true);
   }
 
   // update props
@@ -77,9 +81,17 @@ export default function Code(props) {
           Compile
         </Button>
       </div>
-      <p className={`redtext monospace ${styles.error}`}>
-        {error.toString()}
-      </p>
+      <Snackbar
+        open={snackbarOpen}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+      >
+        <Alert
+          onClose={() => setSnackbarOpen(false)}
+          severity={message.type}
+        >
+          {message.text}
+        </Alert>
+      </Snackbar>
     </div>
   );
 }

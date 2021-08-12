@@ -16,15 +16,6 @@
 
 .compilebutton {
   position: absolute!important;
-  margin: 10px!important;
-  bottom: 0;
-  right: 0;
-}
-
-.error {
-  margin: 0;
-  padding: 10px;
-  background: #202020;
-  font-size: 12px;
-  height: 36px;
+  bottom: 12px;
+  right: 8px;
 }
