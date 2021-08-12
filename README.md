@@ -2,6 +2,8 @@
 
 A minimalist online game engine.
 
+Try it here: [pixele.vercel.app](https://pixele.vercel.app)
+
 ## Drawing
 
 `clear()`: clears canvas
