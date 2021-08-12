@@ -151,8 +151,8 @@ export default function Maps(props) {
     // return if unchanged
     if (newTile[tileIndex] === currColor) return;
     // set tile
-    newTile.splice(tileIndex, 1, currColor);
-    newTiles.splice(currTile, 1, newTile);
+    newTile[tileIndex] = currColor;
+    newTiles[currTile] = newTile;
     setTiles(newTiles);
   }
 
@@ -175,8 +175,8 @@ export default function Maps(props) {
     // return if unchanged
     if (newMap[mapIndex] === currTile) return;
     // set map
-    newMap.splice(mapIndex, 1, currTile);
-    newMaps.splice(currMap, 1, newMap);
+    newMap[mapIndex] = currTile;
+    newMaps[currMap] = newMap;
     setMaps(newMaps);
   }
 
@@ -307,7 +307,7 @@ export default function Maps(props) {
             className={styles.colorinput}
             onChange={e => {
               const newColors = colors.slice();
-              newColors.splice(currColor, 1, e.target.value);
+              newColors[currColor] = e.target.value;
               setColors(newColors);
             }}
           />
@@ -372,36 +372,36 @@ export default function Maps(props) {
           }
         </div>
         <div className={styles.map}>
-        <canvas
-          id="canvas-map"
-          className={
-            mapGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
-          }
-          width={mapPixels}
-          height={mapPixels}
-          onMouseDown={e => { sketchingMap = true; sketchMap(e); }}
-          onMouseMove={e => { if (sketchingMap) sketchMap(e); }}
-          onMouseUp={e => { sketchingMap = false; }}
-          onMouseLeave={e => { sketchingMap = false; }}
-        />
-        <div className={styles.options}>
-          <label htmlFor="input-mapgridded">Grid</label>
-          <input
-            id="input-mapgridded"
-            type="checkbox"
-            checked={mapGridded}
-            onChange={e => setMapGridded(e.target.checked)}
+          <canvas
+            id="canvas-map"
+            className={
+              mapGridded ? `${styles.canvas} ${styles.gridded}` : styles.canvas
+            }
+            width={mapPixels}
+            height={mapPixels}
+            onMouseDown={e => { sketchingMap = true; sketchMap(e); }}
+            onMouseMove={e => { if (sketchingMap) sketchMap(e); }}
+            onMouseUp={e => { sketchingMap = false; }}
+            onMouseLeave={e => { sketchingMap = false; }}
           />
-        </div>
+          <div className={styles.options}>
+            <label htmlFor="input-mapgridded">Grid</label>
+            <input
+              id="input-mapgridded"
+              type="checkbox"
+              checked={mapGridded}
+              onChange={e => setMapGridded(e.target.checked)}
+            />
+          </div>
         </div>
       </div>
       <canvas
-          id="canvas-select"
-          width={selectFullWidth}
-          height={selectFullHeight}
-          className={styles.selectcanvas}
-          onMouseDown={select}
-        />
+        id="canvas-select"
+        width={selectFullWidth}
+        height={selectFullHeight}
+        className={styles.selectcanvas}
+        onMouseDown={select}
+      />
     </div>
   );
 }

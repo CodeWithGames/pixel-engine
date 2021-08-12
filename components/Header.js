@@ -1,9 +1,7 @@
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import PersonIcon from '@material-ui/icons/Person';
 import PaletteIcon from '@material-ui/icons/Palette';
-import Link from 'next/link';
 import Image from 'next/image';
 
 import styles from '../styles/Header.module.css';

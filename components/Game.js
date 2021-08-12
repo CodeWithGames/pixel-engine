@@ -1,5 +1,4 @@
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import StopIcon from '@material-ui/icons/Stop';
 import GetAppIcon from '@material-ui/icons/GetApp';
@@ -127,9 +126,9 @@ export default function Game(props) {
           const color = _colors[tile[colorIndex]];
           _ctx.fillStyle = color;
           // fill pixel
-          const xm = x + xp * _tileGridPixels;
-          const ym = y + yp * _tileGridPixels;
-          _ctx.fillRect(xm, ym, _tileGridPixels, _tileGridPixels);
+          const xm = x + xp * _pixelPixels;
+          const ym = y + yp * _pixelPixels;
+          _ctx.fillRect(xm, ym, _pixelPixels, _pixelPixels);
         }
       }
     }
