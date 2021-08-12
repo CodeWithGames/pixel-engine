@@ -25,8 +25,8 @@ const emptySrc =
 
 export default function Game(props) {
   const { tileSize, mapSize, playing, setPlaying } = props;
-  const mapGridPixels = Math.floor(canvasPixels / mapSize);
-  const tileGridPixels = Math.floor(mapGridPixels / tileSize);
+  const tilePixels = Math.floor(canvasPixels / mapSize);
+  const pixelPixels = Math.floor(tilePixels / tileSize);
 
   const srcDoc =
 `<html>
@@ -55,21 +55,13 @@ export default function Game(props) {
       _ctx.fillStyle = color;
       _ctx.fillRect(0, 0, _canvasPixels, _canvasPixels);
     }
-    const rect = (x, y, w, h, color) => {
+    const rect = (x, y, width, height, color) => {
       _ctx.fillStyle = color;
-      _ctx.fillRect(x, y, w, h);
+      _ctx.fillRect(x, y, width, height);
     }
-    // game loop
-    let _lastTime = 0;
-    const _gameLoop = time => {
-      // calculate time delta
-      const delta = time - _lastTime;
-      _lastTime = time;
-      // call update and draw
-      if (typeof update === 'function') update(delta);
-      if (typeof draw === 'function') draw();
-      // continue loop
-      requestAnimationFrame(_gameLoop);
+    const objRect = obj => {
+      const { x, y, width, height, color } = obj;
+      rect(x, y, width, height, color);
     }
     // key listeners
     let _lastPressedKeys = {};
@@ -78,18 +70,14 @@ export default function Game(props) {
     window.onkeyup = e => _pressedKeys[e.keyCode] = false;
     const isKeyDown = key => {
       // handle invalid key
-      if (typeof key !== 'string' || key.length !== 1) {
-        throw new Error(\`\${key} is an invalid key\`);
-      }
+      if (typeof key !== 'string' || key.length !== 1) return undefined;
       // handle key code
       const keyCode = key.toUpperCase().charCodeAt(0);
       return _pressedKeys[keyCode];
     }
     const isKey = key => {
       // handle invalid key
-      if (typeof key !== 'string' || key.length !== 1) {
-        throw new Error(\`\${key} is an invalid key\`);
-      }
+      if (typeof key !== 'string' || key.length !== 1) return undefined;
       // handle key code
       const keyCode = key.toUpperCase().charCodeAt(0);
       return _pressedKeys[keyCode] && !_lastPressedKeys[keyCode];
@@ -100,8 +88,8 @@ export default function Game(props) {
     const _maps = ${JSON.stringify(props.maps)};
     const _mapSize = ${mapSize};
     const _tileSize = ${tileSize};
-    const _mapGridPixels = ${mapGridPixels};
-    const _tileGridPixels = ${tileGridPixels};
+    const _tilePixels = ${tilePixels};
+    const _pixelPixels = ${pixelPixels};
     const loadMap = index => {
       // get map
       const map = _maps[index];
@@ -119,10 +107,10 @@ export default function Game(props) {
               const color = _colors[tile[colorIndex]];
               _ctx.fillStyle = color;
               // get fill position and size
-              let xm = x * _mapGridPixels + xp * _tileGridPixels;
-              let ym = y * _mapGridPixels + yp * _tileGridPixels;
+              let xm = x * _tilePixels + xp * _pixelPixels;
+              let ym = y * _tilePixels + yp * _pixelPixels;
               // fill pixel
-              _ctx.fillRect(xm, ym, _tileGridPixels, _tileGridPixels);
+              _ctx.fillRect(xm, ym, _pixelPixels, _pixelPixels);
             }
           }
         }
@@ -147,13 +135,25 @@ export default function Game(props) {
     }
     // runs after body has loaded
     const _start = () => {
+      // game loop
+      let lastTime = 0;
+      const gameLoop = time => {
+        // calculate time delta
+        const delta = time - lastTime;
+        lastTime = time;
+        // call update and draw
+        if (typeof update === 'function') update(delta);
+        if (typeof draw === 'function') draw();
+        // continue loop
+        requestAnimationFrame(gameLoop);
+      }
       // get canvas and context
       _canvas = document.getElementById('canvas-game');
       _ctx = _canvas.getContext('2d');
       // run start function
       if (typeof start === 'function') start();
       // start game loop
-      requestAnimationFrame(_gameLoop);
+      requestAnimationFrame(gameLoop);
     }
     ${props.code}
   </script>
