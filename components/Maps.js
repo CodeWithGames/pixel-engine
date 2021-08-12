@@ -13,9 +13,10 @@ let tileCanvas, tileCtx;
 let mapCanvas, mapCtx;
 let selectCanvas, selectCtx;
 
+// tile units
 const tileCount = 64;
-const mapCount = 16;
-
+const tileRows = 4;
+const tileCols = Math.floor(tileCount / tileRows);
 const tilePixels = 128;
 
 // select units
@@ -171,6 +172,24 @@ export default function Maps(props) {
     newMap.splice(mapIndex, 1, currTile);
     newMaps.splice(currMap, 1, newMap);
     setMaps(newMaps);
+  }
+
+  // selects sprite with given mouse event data
+  function select(e) {
+    // get x and y on canvas
+    const currX = e.clientX - selectCanvas.offsetLeft + window.scrollX - selectBorder;
+    const currY = e.clientY - selectCanvas.offsetTop + window.scrollY - selectBorder;
+    // get x and y in grid units
+    const gridX = Math.max(
+      0, Math.min(Math.floor(currX / gridPixels), tileCols - 1)
+    );
+    const gridY = Math.max(
+      0, Math.min(Math.floor(currY / gridPixels), tileRows - 1)
+    );
+    // select tile
+    const tileIndex = gridY * tileCols + gridX;
+    if (tileIndex === currTile) return;
+    setCurrTile(tileIndex);
   }
 
   // get canvas contexts on start
