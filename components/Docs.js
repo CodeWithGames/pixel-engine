@@ -3,8 +3,55 @@ import styles from '../styles/Docs.module.css';
 export default function Docs() {
   return (
     <div className={styles.container}>
-      <h1>Docs</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nec lobortis justo. In ut purus at neque mollis rutrum. Phasellus semper pulvinar mollis. Sed euismod bibendum elit quis scelerisque. Aliquam sollicitudin finibus felis, sed feugiat quam suscipit sit amet. Pellentesque molestie commodo mi. Sed volutpat velit id purus fermentum auctor. Ut condimentum scelerisque blandit.</p>
+      <h1>Pixel Engine</h1>
+      <p>A minimalist online game engine.</p>
+      <h2>Drawing</h2>
+      <p><code>clear()</code>: clears canvas</p>
+      <p><code>fill(color)</code>: draws rect of color <code>color</code> over full canvas</p>
+      <p><code>rect(x, y, w, h, color)</code>: draws rect of width <code>w</code>, height <code>h</code>, and color <code>color</code> at <code>x</code>, <code>y</code></p>
+      <h2>Game Loop</h2>
+      <p><code>start()</code>: runs once at the start of the game before <code>update</code> and <code>draw</code></p>
+      <p><code>update(delta)</code>: runs once a frame where <code>delta</code> is time in milliseconds since last call</p>
+      <p><code>draw()</code>: runs once a frame after <code>update</code></p>
+      <h2>Keyboard Input</h2>
+      <p><code>isKeyDown(key)</code>: returns whether given character <code>key</code> is pressed</p>
+      <p><code>isKey(key)</code>: returns whether given character <code>key</code> was pressed in the last frame</p>
+      <h2>Maps</h2>
+      <p><code>loadMap(index)</code>: loads map of index <code>index</code> to canvas</p>
+      <p><code>loadTile(x, y, index)</code>: loads tile of index <code>index</code> at <code>x</code>, <code>y</code></p>
+      <h2>Example</h2>
+      <pre>
+        <code>
+{`// define player
+const player = {
+  x: 0,
+  y: 0,
+  width: 16,
+  height: 16,
+  color: 'blue'
+};
+const speed = 0.1;
+
+// runs once on start
+function start() {
+  fill('green');
+}
+
+// runs once a frame
+function update(delta) {
+  if (isKeyDown('w')) player.y -= speed * delta;
+  if (isKeyDown('a')) player.x -= speed * delta;
+  if (isKeyDown('s')) player.y += speed * delta;
+  if (isKeyDown('d')) player.x += speed * delta;
+}
+
+// runs once a frame after update
+function draw() {
+  fill('green');
+  objRect(player);
+}`}
+        </code>
+      </pre>
     </div>
   );
 }

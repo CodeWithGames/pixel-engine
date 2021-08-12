@@ -2,8 +2,13 @@
   background: #ddd;
   flex-grow: 1;
   padding: 20px;
+  overflow: scroll;
 }
 
 .container > h1 {
   margin-top: 0;
+}
+
+.container > pre {
+  margin-bottom: 0;
 }
