@@ -1,6 +1,5 @@
 import Maps from '../components/Maps.js';
 import Game from '../components/Game.js';
-import Docs from '../components/Docs.js';
 
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
@@ -8,6 +7,7 @@ import { useState } from 'react';
 import styles from '../styles/Index.module.css';
 
 const Code = dynamic(import('../components/Code.js'), { ssr: false });
+const Docs = dynamic(import('../components/Docs.js'), { ssr: false });
 
 // units
 const tileSize = 8;
