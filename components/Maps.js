@@ -36,6 +36,7 @@ export default function Maps(props) {
   const tileGridPixels = Math.floor(tilePixels / tileSize);
   const mapGridPixels = Math.floor(mapPixels / mapSize);
   const pixelPixels = Math.floor(mapGridPixels / tileSize);
+  const gridPixelPixels = Math.floor(gridPixels / tileSize);
 
   const defaultTiles = Array(tileCount).fill(Array(tileSize ** 2).fill(0));
   const defaultMaps = Array(mapCount).fill(Array(mapSize ** 2).fill(0));
@@ -84,6 +85,8 @@ export default function Maps(props) {
         tileCtx.fillRect(xm, ym, xs, ys);
       }
     }
+    // update select canvas
+    drawSelect();
   }
 
   // draws current map
@@ -172,6 +175,38 @@ export default function Maps(props) {
     newMap.splice(mapIndex, 1, currTile);
     newMaps.splice(currMap, 1, newMap);
     setMaps(newMaps);
+  }
+
+  // draws select canvas
+  function drawSelect() {
+    // draw outline
+    selectCtx.fillStyle = '#000';
+    selectCtx.fillRect(0, 0, selectFullWidth, selectFullHeight);
+    // for each tile
+    for (let x = 0; x < tileCols; x++) {
+      for (let y = 0; y < tileRows; y++) {
+        // get tile
+        const tileIndex = y * tileCols + x;
+        const tile = tiles[tileIndex];
+        // for each pixel
+        for (let xp = 0; xp < tileSize; xp++) {
+          for (let yp = 0; yp < tileSize; yp++) {
+            // set fill color
+            const colorIndex = yp * tileSize + xp;
+            const color = colors[tile[colorIndex]];
+            selectCtx.fillStyle = color;
+            // set fill position and size
+            const xPos = x * gridPixels + xp * gridPixelPixels;
+            const yPos = y * gridPixels + yp * gridPixelPixels;
+            // fill sprite
+            selectCtx.fillRect(
+              xPos + selectBorder, yPos + selectBorder,
+              gridPixelPixels, gridPixelPixels
+            );
+          }
+        }
+      }
+    }
   }
 
   // selects sprite with given mouse event data
